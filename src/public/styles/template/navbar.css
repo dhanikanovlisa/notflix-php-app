@@ -1,0 +1,132 @@
+.navbar {
+    width: 100%;
+    height: 6rem;
+
+    position: fixed;
+    top: 0px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.70) 0%, rgba(217, 217, 217, 0) 100%);
+    z-index: 100;
+}
+
+.logo {
+    margin-left: 4rem;
+}
+.navbar-link a{
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.navbar-link a:hover{
+    text-shadow: 0px 0px 20px rgba(255, 255, 255, 1);
+    cursor: pointer;
+}
+
+.navbar-link {
+    flex:1;
+    max-width: 550px;
+    display : flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 60px;
+    margin-right: 60px;
+}
+
+
+.burger-bar {
+    display: none;
+    background-color: transparent;
+}
+
+.photo-profile {
+    border-radius: 100%;
+    width: 45px;
+    height: 45px;
+    box-shadow: 2px 2px 20px 5px rgba(248, 0, 0, 0.75);
+    transition: transform 0.3s ease-in-out;
+}
+
+.photo-profile:hover {
+    box-shadow: 2px 2px 20px 5px rgba(255, 255, 255, 0.6);
+    transform: scale(1.2);
+}
+
+.hidden-link {
+    display: none;
+}
+
+.user-menu .hidden-link{
+    color: var(--black);
+    display: block;
+    margin: 1.25rem 0;
+}
+
+.user-menu .hidden-link:hover{
+    text-shadow: 0px 0px 20px rgb(0, 0, 0);
+}
+.user-menu {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+    position: absolute;
+    right: 4rem;
+    top: 5rem;
+    padding: 0 2rem;
+    border-radius: 10px;
+    display: none;
+}
+
+@media screen and (max-width: 650px) {
+
+    .navbar-link {
+        display: none;
+    }
+
+    .photo-profile {
+        display: none;
+    }
+
+    .user-menu {
+        display: hidden;
+    }
+    .navbar-link a:hover{
+        text-shadow: 0px 0px 20px rgb(0, 0, 0);
+    }
+
+    .hidden-link {
+        display: block;
+    }
+
+    .photo-profile:hover {
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
+    }
+
+    .burger-bar {
+        display: block;
+    }
+
+    .burger-bar img {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .responsive {
+        display: flex;
+        flex-direction: column;
+        background-color: var(--white);
+        position: absolute;
+        right: 0;
+        top: 5rem;
+        padding: 1.5rem 2rem;
+        row-gap: 10px;
+        border-radius: 10px;
+    }
+
+    .responsive a {
+        color: var(--black);
+    }
+}

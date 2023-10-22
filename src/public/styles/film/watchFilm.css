@@ -1,0 +1,106 @@
+body {
+    padding: 100px 0;
+}
+
+section {
+    padding: 0 100px;
+}
+
+header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+button{
+    box-shadow: 2px 2px 20px 5px rgba(248, 0, 0, 0.6);
+    border-radius: 7px;
+    transition: transform 0.3s ease-in-out;
+    font-weight: bold;
+}
+
+button:hover{
+    box-shadow: 2px 2px 20px 5px rgba(255, 255, 255, 0.6);
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+h2 {
+    padding: 10px 10px 10px 0;
+}
+
+#video-player {
+    width: 100%;
+}
+
+#details {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.film-detail {
+    flex-basis: 15%;
+    padding: 30px;
+}
+#description {
+    flex-basis: 40%;
+    flex-shrink: 1;
+    margin-right: auto;
+}
+
+@media only screen and (max-width: 1024px){
+    section{
+        padding: 0 50px;
+    }
+    #description {
+        flex-basis: 60%;
+    }
+}
+
+@media only screen and (max-width: 774px){
+    section{
+        padding: 0 30px;
+    }
+    #description {
+        flex-basis: 100%;
+    }
+}
+
+@media only screen and (max-width: 650px){
+    header{
+        flex-direction: column;
+        align-content: flex-start;
+        align-items: center;
+    }
+    button{
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+}
+
+@media only screen and (max-width: 460px){
+    .film-detail{
+        padding: 0 15px;
+    }
+}
+
+@media only screen and (max-width: 430px){
+    .film-detail{
+        margin-top: 20px;
+        margin-right: auto;
+    }
+}
+
+@media only screen and (max-width: 380px){
+    header{
+        padding: 0 10px 10px 0;
+    }
+    section{
+        padding: 0 15px;
+    }
+    .film-detail{
+        margin-top: 20px;
+        margin-right: auto;
+    }
+}

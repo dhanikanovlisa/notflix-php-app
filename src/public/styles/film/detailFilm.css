@@ -1,0 +1,64 @@
+.container {
+    padding-top: 7rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
+}
+
+.title-container {
+    width: 75%;
+    max-width: 100%;
+    padding-bottom: 1rem;
+
+}
+
+.whole-container {
+    width: 75%;
+    max-width: 100%;
+    display: flex;
+
+    gap: 2rem;
+}
+
+.image-container {
+
+    display: flex;
+
+    gap: 3rem;
+}
+
+.field-container {
+    width: 75%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+
+    gap: 0.5rem;
+}
+
+.button-container {
+    width: 75%;
+    max-width: 100%;
+    display: flex;
+    gap: 1rem;
+}
+
+.card {
+    width: 150px;
+    height: 225px;
+    box-shadow: 2px 2px 20px 5px rgba(248, 0, 0, 0.6);
+    border-radius: 7px;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    border-radius: 4px;
+}

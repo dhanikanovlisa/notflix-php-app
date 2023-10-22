@@ -1,0 +1,28 @@
+.container{
+    padding-top:7rem ;
+    padding-left: 4rem;
+    padding-right: 4rem;
+}
+.whole-container{
+    display: flex;
+    justify-content: flex-start;
+    gap:2rem;
+}
+
+.field-container{
+    display: flex;
+    flex-direction: column;
+    gap:0.2rem;
+    padding-top:2rem;
+    padding-bottom:2rem;
+    justify-content: center;
+}
+
+.formcontain{
+    display: flex;
+    flex-direction: column;
+}
+
+.button-contain{
+    display: flex;
+}

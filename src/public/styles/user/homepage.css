@@ -1,0 +1,70 @@
+.img-header{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    height: 400px;
+    background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.img-header img{
+    position: absolute;
+    width: 100%; 
+    height: 400px;
+    object-fit: cover;
+    z-index: -3;
+}
+
+.img-header-overlay {
+    position: absolute;
+    top:0;
+    width: 100%; 
+    height: 400px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.2) 100%);
+    z-index: -2;
+}
+
+.img-header-text {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    max-width: 600px;
+    text-align: justify;
+    position: absolute;
+    left: 0;
+    padding: 0 4rem 2rem;
+    z-index: 0;
+}
+
+.body{
+    padding: 0 4rem;
+    margin: 2rem 0;
+}
+
+.body-title{
+
+    margin-bottom: 3rem;
+}
+
+.cards {
+    margin-bottom: 3rem;
+    padding: 0px 0px !important;
+}
+
+.buttons {
+    display: flex;
+    column-gap: 10px;
+}
+
+.button-white {
+    height: 40px !important;
+}
+
+.watchlist {
+    width: 40px;
+    padding: 0 !important;
+    text-align: center !important;
+}
+
+.button-white:active {
+    background-color: rgb(175, 175, 169);
+}

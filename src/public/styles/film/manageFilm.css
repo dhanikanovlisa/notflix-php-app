@@ -1,0 +1,21 @@
+.container{
+    padding-left: 4rem;
+    padding-right:4rem;
+}
+
+.upper-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding:1rem;
+}
+
+.cards {
+    display: grid;
+    justify-items: center;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    row-gap: 40px;
+    padding: 1rem;
+ }

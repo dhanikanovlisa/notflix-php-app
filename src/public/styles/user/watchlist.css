@@ -1,0 +1,19 @@
+body {
+    padding: 100px 0;
+}
+
+section {
+    padding: 0 100px;
+}
+
+@media only screen and (max-width: 1024px){
+    section{
+        padding: 0 50px;
+    }
+}
+
+@media only screen and (max-width: 774px){
+    section{
+        padding: 0 30px;
+    }
+}
