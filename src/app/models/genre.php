@@ -10,6 +10,16 @@ class GenreModel{
         $this->db = new Database;
     }
 
+    /**Get genre count */
+    public function getGenreCount(){
+        $this->db->callQuery('SELECT COUNT(*) FROM ' . $this->table);
+        return $this->db->fetchResult();   
+    }
+
+    public function getGenre($limit, $offset){
+        $this->db->callQuery("SELECT * FROM genre LIMIT $limit OFFSET $offset");
+        return $this->db->fetchAllResult();
+    }
     /**Get All Genre */
     public function getAllGenre(){
         $this->db->callQuery('SELECT * FROM ' . $this->table);
