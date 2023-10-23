@@ -150,6 +150,7 @@ class UserController
         http_response_code(200);
         
         $this->userModel->deleteUser($_POST['user_id']);
+        unset($_SESSION['user_id']);
         echo json_encode(["redirect_url" => "/manage-user"]);
     }
 
