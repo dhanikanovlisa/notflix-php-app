@@ -8,6 +8,8 @@ services:
     volumes:
       - ./src/app:/var/www/app
       - ./src/public:/var/www/html
+    networks:
+      - web-postgres
   postgres:
     image: postgres:latest
     env_file: .env
@@ -15,7 +17,9 @@ services:
       - 5431:5432
     volumes:
       -  ./db:/var/lib/postgres/data
-      - ./migrations:/docker-entrypoint-initdb.d
+      - ./migrations:/docker-entrypoint-initdb.d/01_sample.sql
+    networks:
+      - web-postgres
   pgadmin:
     image: dpage/pgadmin4
     environment:
