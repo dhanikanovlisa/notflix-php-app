@@ -33,12 +33,11 @@
             </a>
         </div>
         <div class="body">
-                <div class="body-title"><h2>What Do You Want to Watch Today?</h2></div>
                 <div class="cards">
-                    <?php  $home->generateCards()?>
+                    <?php  $film->generateCards()?>
                 </div>
                 <div class="pagination">
-                    <?php $home->generatePagination()?>
+                    <?php $film->generatePagination()?>
                 </div>
             </div>
     </div>
