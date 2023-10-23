@@ -20,6 +20,18 @@ class UserModel{
         return $this->db->fetchResult();
     }
 
+    /**Get user count */
+    public function getUserCount(){
+        $this->db->callQuery('SELECT COUNT(*) FROM ' . $this->table);
+        return $this->db->fetchResult();   
+    }
+
+    /**Get user for pagination */
+    public function getUser($limit, $offset){
+        $this->db->callQuery("SELECT * FROM users LIMIT $limit OFFSET $offset");
+        return $this->db->fetchAllResult();
+    }
+
     /**Get user by username*/
     public function getUserByUsername($username){
         $this->db->callQuery("SELECT * FROM users WHERE username = '$username'");

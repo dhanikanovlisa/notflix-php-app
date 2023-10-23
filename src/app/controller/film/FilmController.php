@@ -74,6 +74,7 @@ class FilmController
         }
         if (empty($films) && $this->page == 1) echo "No film currently available";
     }
+    
     /**Add Film */
     public function addFilm()
     {

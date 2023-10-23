@@ -8,11 +8,15 @@ class UserController
 {
     private $userModel;
     private $middleware;
+    private int $limit;
+    private int $page;
 
     public function __construct()
     {
         $this->userModel = new UserModel();
         $this->middleware = new AuthenticationMiddleware();
+        $this->page = isset($_GET['page']) && $_GET['page']>0 ? $_GET['page'] : 1;
+        $this->limit = isset($_GET['limit']) && $_GET['limit']>0 ? $_GET['limit'] : 12;
     }
 
     public function getUserByID($param){
@@ -35,6 +39,25 @@ class UserController
         }
         return $result;
     }
+
+    public function generatePagination(){
+        $total_records = $this->userModel->getUserCount();
+        if($total_records) $total_records=$total_records['count'];
+        $items_per_page = 12;
+        $current_page = $this->page;
+
+        include(DIRECTORY . "/../view/template/pagination.php");
+    }
+
+    public function generateCards(){
+        $offset = ($this->page-1)*$this->limit;
+        $users = $this->userModel->getUser($this->limit, $offset);
+        foreach($users as $user){
+            include(DIRECTORY . "/../view/template/cardUser.php");
+        }
+        if (empty($users) && $this->page == 1) echo "No user currently available";
+    }
+
     public function checkUsername($username)
     {
         $username = ltrim($username['username'], ':');

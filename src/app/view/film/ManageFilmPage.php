@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    <?php include (DIRECTORY. "/../view/template/NavbarUser.php"); ?>
+    <?php include(DIRECTORY . "/../view/template/NavbarUser.php"); ?>
     <?php
     require_once DIRECTORY . '/../controller/film/FilmController.php';
     $film = new FilmController();
@@ -33,13 +33,13 @@
             </a>
         </div>
         <div class="body">
-                <div class="cards">
-                    <?php  $film->generateCards()?>
-                </div>
-                <div class="pagination">
-                    <?php $film->generatePagination()?>
-                </div>
+            <div class="cards">
+                <?php $film->generateCards() ?>
             </div>
+            <div class="pagination">
+                <?php $film->generatePagination() ?>
+            </div>
+        </div>
     </div>
 </body>
 

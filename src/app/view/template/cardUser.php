@@ -5,8 +5,12 @@
             <img src="<?php echo "/storage/profile/" . $user['photo_profile']?>" alt="Profile Picture" />
         </div>
         <div class="text-div">
-            <h3 class="text-white"><?php echo $user["name"]; ?></h3>
-            <p class="text-white"><?php echo $user["role"]; ?></p>
+            <h3 class="text-white"><?php echo $user["first_name"] . " " . $user["last_name"]; ?></h3>
+            <p class="text-white"><?php if($user["is_admin"]) {
+                echo "Admin";
+            } else {
+                echo "User";
+            } ?></p>
         </div>
         </div>
     </div>
