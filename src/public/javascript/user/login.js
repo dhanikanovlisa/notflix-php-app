@@ -28,7 +28,7 @@ loginForm && loginForm.addEventListener('submit', async (e) => {
                 return;
             } else {
                 const xhr_pass = new XMLHttpRequest();
-                xhr_pass.open('POST', '/login/login');
+                xhr_pass.open('POST', '/auth/login');
             
                 const formData = new FormData();
                 formData.append('username', usernameInput.value);

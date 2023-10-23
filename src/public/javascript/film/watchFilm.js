@@ -30,7 +30,7 @@ buttonWatchlist && buttonWatchlist.addEventListener('click', ()=>{
     formData.append('film_id', filmID);
     
     if(value==='add'){
-        xhr.open('POST', '/add-watchlist', true);
+        xhr.open('POST', '/add/watchlist', true);
         xhr.send(formData);
         
         xhr.onreadystatechange = async () =>{
@@ -43,7 +43,7 @@ buttonWatchlist && buttonWatchlist.addEventListener('click', ()=>{
         }
     }
     else if(value==='remove'){
-        xhr.open('POST', '/delete-watchlist', true);
+        xhr.open('POST', '/delete/watchlist', true);
         xhr.send(formData);
 
         xhr.onreadystatechange = async () =>{

@@ -42,7 +42,7 @@ function fail() {
 
 const deleteGenre = (id) => {
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/delete-genre/:' + id);
+    xhr.open('POST', '/delete/genre/:' + id);
 
     const formData = new FormData();
     formData.append('genre_id', id);

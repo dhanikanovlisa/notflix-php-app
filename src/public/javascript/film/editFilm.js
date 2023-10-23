@@ -96,7 +96,7 @@ function closePage(){
 editFilmForm && editFilmForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     let xhr = new XMLHttpRequest();
-    xhr.open('POST', '/update-film');
+    xhr.open('POST', '/update/film');
 
     const formData = new FormData();
     formData.append('film_id', filmID);

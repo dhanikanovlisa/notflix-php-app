@@ -29,7 +29,7 @@ function succes() {
 
 const deleteSong = (id) => {
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/delete-film');
+    xhr.open('POST', '/delete/film');
 
     const formData = new FormData();
     formData.append('film_id', id);

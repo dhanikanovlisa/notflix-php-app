@@ -35,7 +35,7 @@ genreName && genreName.addEventListener('keyup', async(e) => {
     else {
         e.preventDefault();
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', '/check-genre/:' + genre);
+        xhr.open('GET', '/check/genre/:' + genre);
         
         xhr.send();
         xhr.onreadystatechange = () => {
@@ -54,7 +54,7 @@ genreName && genreName.addEventListener('keyup', async(e) => {
 addGenreForm && addGenreForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     let xhr = new XMLHttpRequest();
-    xhr.open('POST', '/add-genre/add-genre');
+    xhr.open('POST', '/add/genre');
 
 
     let formData = new FormData();

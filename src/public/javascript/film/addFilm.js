@@ -134,7 +134,7 @@ addFilmForm && addFilmForm.addEventListener('submit', async (e) => {
     } else {
         e.preventDefault();
         let xhr = new XMLHttpRequest();
-        xhr.open('POST', '/add-film/add-film');
+        xhr.open('POST', '/add/film');
 
 
         let formData = new FormData();

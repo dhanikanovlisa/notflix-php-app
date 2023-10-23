@@ -81,7 +81,7 @@ const changeToUser = (id) => {
 
 const deleteUser = (id) => {
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/delete-user');
+    xhr.open('POST', '/delete/user');
 
     const formData = new FormData();
     formData.append('user_id', id);
