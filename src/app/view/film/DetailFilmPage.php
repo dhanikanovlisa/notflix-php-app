@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    <?php include(DIRECTORY. "/../component/template/NavbarUser.php"); ?>
+    <?php include(DIRECTORY. "/../view/template/NavbarUser.php"); ?>
     <?php
 
     $filmID = $params['id'];
@@ -38,7 +38,7 @@
     <div id="" class='container'>
         <?php
         if ($totalRow == 0) {
-            require_once DIRECTORY . '/../component/conditional/NotFound.php';
+            require_once DIRECTORY . '/../view/conditional/NotFound.php';
             exit;
         } else {
         ?>
@@ -104,7 +104,7 @@
         ?>
         
     </div>
-    <?php include(DIRECTORY. "/../component/template/toast.php"); ?>
+    <?php include(DIRECTORY. "/../view/template/toast.php"); ?>
 </body>
 
 

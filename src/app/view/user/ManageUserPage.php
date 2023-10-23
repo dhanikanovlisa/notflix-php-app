@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<?php include (DIRECTORY. "/../component/template/NavbarUser.php"); ?>
+<?php include (DIRECTORY. "/../view/template/NavbarUser.php"); ?>
     <?php
     require_once DIRECTORY . '/../controller/user/UserController.php';
     $user = new UserController();
@@ -30,7 +30,7 @@
         <div class="cards">
         <?php foreach ($result as $user) {
             if($user['user_id'] != $id) {
-                include(DIRECTORY . "/../component/template/cardUser.php");
+                include(DIRECTORY . "/../view/template/cardUser.php");
             }
         } ?>
         </div>

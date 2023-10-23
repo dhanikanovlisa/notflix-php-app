@@ -25,7 +25,7 @@ class HomePageController{
         if ($this->middleware->isAdmin()) {
             header("Location: /restrictAdmin");
         } else if ($this->middleware->isAuthenticated()) {
-            require_once DIRECTORY . "/../component/user/HomePage.php";
+            require_once DIRECTORY . "/../view/user/HomePage.php";
         } else {
             header("Location: /login");
         }
@@ -37,14 +37,14 @@ class HomePageController{
         $items_per_page = 12;
         $current_page = $this->page;
 
-        include(DIRECTORY . "/../component/template/pagination.php");
+        include(DIRECTORY . "/../view/template/pagination.php");
     }
 
     public function generateCards(){
         $offset = ($this->page-1)*$this->limit;
         $films = $this->filmModel->getFilm($this->limit, $offset);
         foreach($films as $film){
-            include(DIRECTORY . "/../component/template/cardMovie.php");
+            include(DIRECTORY . "/../view/template/cardMovie.php");
         }
         if (empty($films) && $this->page == 1) echo "No film currently available";
     }

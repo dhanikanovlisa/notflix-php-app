@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <?php include (DIRECTORY. "/../component/template/NavbarUser.php"); ?>
+    <?php include (DIRECTORY. "/../view/template/NavbarUser.php"); ?>
     <?php
     require_once DIRECTORY . '/../controller/user/UserController.php';
 
@@ -28,7 +28,7 @@
     $totalRow = count($userData);
 
     if ($totalRow == 0) {
-        require_once  DIRECTORY . '/../component/conditional/NotFound.php';
+        require_once  DIRECTORY . '/../view/conditional/NotFound.php';
         exit;
     } else {
     ?>

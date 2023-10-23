@@ -28,7 +28,7 @@ class WatchListPageController{
         $offset = ($this->page-1)*$this->limit;
         $lf =  $this->watchListModel->getWatchListFilms($this->userID, $this->limit, $offset);
         foreach($lf as $film){
-            include(DIRECTORY . "/../component/template/cardMovie.php");
+            include(DIRECTORY . "/../view/template/cardMovie.php");
         }
         if(empty($lf) && $this->page==1) echo "Your watchlist is empty";
     }
@@ -39,16 +39,16 @@ class WatchListPageController{
         $items_per_page = $this->limit;
         $current_page = $this->page;
 
-        include(DIRECTORY . "/../component/template/pagination.php");
+        include(DIRECTORY . "/../view/template/pagination.php");
     }
 
     public function showWatchListPage()
     {
-        // require_once DIRECTORY . "/../component/user/WatchListPage.php";
+        // require_once DIRECTORY . "/../view/user/WatchListPage.php";
         if ($this->middleware->isAdmin()) {
             header("Location: /restrictAdmin");
         } else if ($this->middleware->isAuthenticated()) {
-            require_once DIRECTORY . "/../component/user/WatchListPage.php";
+            require_once DIRECTORY . "/../view/user/WatchListPage.php";
         } else {
             header("Location: /login");
         }

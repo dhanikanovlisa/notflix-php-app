@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    <?php include (DIRECTORY. "/../component/template/NavbarUser.php");?>
+    <?php include (DIRECTORY. "/../view/template/NavbarUser.php");?>
     <div class="auth-page">
         <h1>Sign Up</h1>
         <form id="registration-form">
@@ -64,7 +64,7 @@
         </form>
         <div class="small-text">Already have an account? <a href="/login">Login</a></div>
     </div>
-    <?php include(DIRECTORY. "/../component/template/toast.php"); ?>
+    <?php include(DIRECTORY. "/../view/template/toast.php"); ?>
 </body>
 
 </html>

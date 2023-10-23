@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <?php include(DIRECTORY. "/../component/template/NavbarUser.php");
+    <?php include(DIRECTORY. "/../view/template/NavbarUser.php");
     ?>
     <div class='container'>
         <h2>Add Genre</h2>
@@ -39,7 +39,7 @@
     </div>
     <script>
     </script>
-    <?php include(DIRECTORY. "/../component/template/toast.php"); ?>
+    <?php include(DIRECTORY. "/../view/template/toast.php"); ?>
 </body>
 
 </html>

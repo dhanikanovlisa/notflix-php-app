@@ -13,12 +13,17 @@ class FilmController
     private $watchlistModel;
     private $middleware;
 
+    private int $limit;
+    private int $page;
+
     public function __construct()
     {
         $this->filmModel = new FilmsModel();
         $this->filmGenreModel = new FilmGenreModel();
         $this->watchlistModel = new WatchListModel();
         $this->middleware = new AuthenticationMiddleware();
+        $this->page = isset($_GET['page']) && $_GET['page']>0 ? $_GET['page'] : 1;
+        $this->limit = isset($_GET['limit']) && $_GET['limit']>0 ? $_GET['limit'] : 12;
     }
 
     /**Get Film */
@@ -30,14 +35,6 @@ class FilmController
     public function getAllFilm()
     {
         $filmData = $this->filmModel->getAllFilm();
-        // $result = [];
-        // foreach ($filmData as $film) {
-        //     $data = [];
-        //     $data["film_id"] = $film['film_id'];
-        //     $data["title"] = $film['title'];
-        //     $data["film_poster"] = $film['film_poster'];
-        //     $result[] = $data;
-        // }
         return $filmData;
     }
 
@@ -60,7 +57,23 @@ class FilmController
         echo json_encode(["isExist" => $isExist]);
     }
 
+    public function generatePagination(){
+        $total_records = $this->filmModel->getFilmCount();
+        if($total_records) $total_records=$total_records['count'];
+        $items_per_page = 12;
+        $current_page = $this->page;
 
+        include(DIRECTORY . "/../view/template/pagination.php");
+    }
+
+    public function generateCards(){
+        $offset = ($this->page-1)*$this->limit;
+        $films = $this->filmModel->getFilm($this->limit, $offset);
+        foreach($films as $film){
+            include(DIRECTORY . "/../view/template/cardMovie.php");
+        }
+        if (empty($films) && $this->page == 1) echo "No film currently available";
+    }
     /**Add Film */
     public function addFilm()
     {
@@ -178,7 +191,7 @@ class FilmController
         if ($this->middleware->isAdmin()) {
             header("Location: /restrictAdmin");
         } else if ($this->middleware->isAuthenticated()) {
-            require_once DIRECTORY . "/../component/film/WatchFilmPage.php";
+            require_once DIRECTORY . "/../view/film/WatchFilmPage.php";
         } else {
             header("Location: /login");
         }
@@ -186,7 +199,7 @@ class FilmController
     public function showDetailFilmPage($params = [])
     {
         if ($this->middleware->isAdmin()) {
-            require_once DIRECTORY . "/../component/film/DetailFilmPage.php";
+            require_once DIRECTORY . "/../view/film/DetailFilmPage.php";
         } else if ($this->middleware->isAuthenticated()) {
             header("Location: /restrict");
         } else {
@@ -196,7 +209,7 @@ class FilmController
     public function showAddFilmPage()
     {
         if ($this->middleware->isAdmin()) {
-            require_once DIRECTORY . "/../component/film/AddFilmPage.php";
+            require_once DIRECTORY . "/../view/film/AddFilmPage.php";
         } else if ($this->middleware->isAuthenticated()) {
             header("Location: /restrict");
         } else {
@@ -207,7 +220,7 @@ class FilmController
     public function showEditFilmPage($params = [])
     {
         if ($this->middleware->isAdmin()) {
-            require_once DIRECTORY . "/../component/film/EditFilmPage.php";
+            require_once DIRECTORY . "/../view/film/EditFilmPage.php";
         } else if ($this->middleware->isAuthenticated()) {
             header("Location: /restrict");
         } else {
@@ -217,7 +230,7 @@ class FilmController
     public function showManageFilmPage()
     {
         if ($this->middleware->isAdmin()) {
-            require_once DIRECTORY . "/../component/film/ManageFilmPage.php";
+            require_once DIRECTORY . "/../view/film/ManageFilmPage.php";
         } else if ($this->middleware->isAuthenticated()) {
             header("Location: /restrict");
         } else {

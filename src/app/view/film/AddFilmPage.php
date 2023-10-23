@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    <?php include(DIRECTORY . "/../component/template/NavbarUser.php");
+    <?php include(DIRECTORY . "/../view/template/NavbarUser.php");
     require_once DIRECTORY . '/../utils/duration.php';
     $minutes = listofMinutes();
     $hours = listofHour();
@@ -191,7 +191,7 @@
     </div>
     <script>
     </script>
-    <?php include(DIRECTORY . "/../component/template/toast.php"); ?>
+    <?php include(DIRECTORY . "/../view/template/toast.php"); ?>
 </body>
 
 </html>

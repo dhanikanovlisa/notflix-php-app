@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <?php include (DIRECTORY. "/../component/template/NavbarUser.php");?>
+    <?php include (DIRECTORY. "/../view/template/NavbarUser.php");?>
     <?php 
         require_once DIRECTORY . '/../controller/watchlist/WatchListPageController.php';
         $watchListPageController = new WatchListPageController();

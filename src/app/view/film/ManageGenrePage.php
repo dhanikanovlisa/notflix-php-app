@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    <?php include (DIRECTORY. "/../component/template/NavbarUser.php"); ?>
+    <?php include (DIRECTORY. "/../view/template/NavbarUser.php"); ?>
     <?php
     require_once DIRECTORY . '/../controller/film/GenreController.php';
     $genre = new GenreController();
@@ -38,12 +38,12 @@
         </div>
             <div class="cards-genre">
                 <?php foreach ($result as $genre) {
-                    include(DIRECTORY . "/../component/template/cardGenre.php");
+                    include(DIRECTORY . "/../view/template/cardGenre.php");
                 } ?>
             </div>
         </div>
     </div>
-    <?php include(DIRECTORY. "/../component/template/toast.php"); ?>
+    <?php include(DIRECTORY. "/../view/template/toast.php"); ?>
 </body>
 
 </html>

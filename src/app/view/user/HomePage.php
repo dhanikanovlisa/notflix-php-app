@@ -19,7 +19,7 @@
     <script type="text/javascript" src="/javascript/user/home.js" defer></script>
 </head>
 <body>
-    <?php include (DIRECTORY. "/../component/template/NavbarUser.php"); ?>
+    <?php include (DIRECTORY. "/../view/template/NavbarUser.php"); ?>
     <?php
         require_once DIRECTORY . '/../controller/user/HomePageController.php';
         $home = new HomePageController();
@@ -69,7 +69,7 @@
                 </div>
             </div>
         <?php }?>
-        <?php include(DIRECTORY. "/../component/template/toast.php"); ?>
+        <?php include(DIRECTORY. "/../view/template/toast.php"); ?>
 </body>
 
 </html>

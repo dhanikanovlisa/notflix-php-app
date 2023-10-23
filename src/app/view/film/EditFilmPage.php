@@ -19,7 +19,7 @@
 
 <body>
     <?php
-    include(DIRECTORY . "/../component/template/NavbarUser.php");
+    include(DIRECTORY . "/../view/template/NavbarUser.php");
     require_once DIRECTORY . '/../utils/duration.php';
     $hours = listofHour();
     $minutes = listofMinutes();
@@ -41,7 +41,7 @@
     <div class='container'>
         <?php
         if ($totalRow == 0) {
-            require_once DIRECTORY . '/../component/conditional/NotFound.php';
+            require_once DIRECTORY . '/../view/conditional/NotFound.php';
             exit;
         } else {
         ?>
@@ -210,7 +210,7 @@
         var filmID = <?php echo json_encode($filmID); ?>;
     </script>
     <script src="/javascript/film/editFilm.js" defer></script>
-    <?php include(DIRECTORY . "/../component/template/toast.php"); ?>
+    <?php include(DIRECTORY . "/../view/template/toast.php"); ?>
 </body>
 
 

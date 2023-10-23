@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <?php include (DIRECTORY. "/../component/template/NavbarUser.php"); ?>
+    <?php include (DIRECTORY. "/../view/template/NavbarUser.php"); ?>
     <?php
     require_once DIRECTORY . '/../controller/user/UserController.php';
     $id = $params["id"];
@@ -29,7 +29,7 @@
     $totalRow = count($userData);
 
     if ($totalRow == 0) {
-        require_once  DIRECTORY . '/../component/conditional/NotFound.php';
+        require_once  DIRECTORY . '/../view/conditional/NotFound.php';
         exit;
     } else {
     ?>
@@ -125,7 +125,7 @@
         var userID = <?php echo json_encode($id); ?>;
     </script>
     <script type="text/javascript" src="/javascript/user/editProfile.js" defer></script>
-    <?php include(DIRECTORY. "/../component/template/toast.php"); ?>
+    <?php include(DIRECTORY. "/../view/template/toast.php"); ?>
 </body>
 
 </html>

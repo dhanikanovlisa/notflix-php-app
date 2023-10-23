@@ -61,7 +61,7 @@ class GenreController
     public function showManageGenrePage()
     {
         if ($this->middleware->isAdmin()) {
-            include_once DIRECTORY . '/../component/film/ManageGenrePage.php';
+            include_once DIRECTORY . '/../view/film/ManageGenrePage.php';
         } else if ($this->middleware->isAuthenticated()) {
             header("Location: /restrict");
         } else {
@@ -72,7 +72,7 @@ class GenreController
     public function addGenrePage()
     {
         if ($this->middleware->isAdmin()) {
-            include_once DIRECTORY . '/../component/film/AddGenrePage.php';
+            include_once DIRECTORY . '/../view/film/AddGenrePage.php';
         } else if ($this->middleware->isAuthenticated()) {
             header("Location: /restrict");
         } else {

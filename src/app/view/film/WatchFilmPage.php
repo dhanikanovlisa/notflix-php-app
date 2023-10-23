@@ -17,7 +17,7 @@
 </head>
 
 <body>
-    <?php include(DIRECTORY. "/../component/template/NavbarUser.php"); ?>
+    <?php include(DIRECTORY. "/../view/template/NavbarUser.php"); ?>
     <?php
     $filmID = $params['id'];
     /**IF someone tries to access URL */
@@ -35,7 +35,7 @@
     $startTime = isset($_COOKIE['lastPlayedTime/'.$filmID]) ? $_COOKIE['lastPlayedTime/'.$filmID] : 0;
 
     if ($totalRow == 0) {
-        require_once  DIRECTORY. '/../component/conditional/NotFound.php';
+        require_once  DIRECTORY. '/../view/conditional/NotFound.php';
         exit;
     } else {
     ?>
