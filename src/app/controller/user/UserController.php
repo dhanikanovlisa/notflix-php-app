@@ -15,11 +15,12 @@ class UserController
     {
         $this->userModel = new UserModel();
         $this->middleware = new AuthenticationMiddleware();
-        $this->page = isset($_GET['page']) && $_GET['page']>0 ? $_GET['page'] : 1;
-        $this->limit = isset($_GET['limit']) && $_GET['limit']>0 ? $_GET['limit'] : 12;
+        $this->page = isset($_GET['page']) && $_GET['page'] > 0 ? $_GET['page'] : 1;
+        $this->limit = isset($_GET['limit']) && $_GET['limit'] > 0 ? $_GET['limit'] : 12;
     }
 
-    public function getUserByID($param){
+    public function getUserByID($param)
+    {
         return $this->userModel->getUserByID($param);
     }
 
@@ -40,19 +41,21 @@ class UserController
         return $result;
     }
 
-    public function generatePagination(){
+    public function generatePagination()
+    {
         $total_records = $this->userModel->getUserCount();
-        if($total_records) $total_records=$total_records['count'];
+        if ($total_records) $total_records = $total_records['count'];
         $items_per_page = 12;
         $current_page = $this->page;
 
         include(DIRECTORY . "/../view/template/pagination.php");
     }
 
-    public function generateCards(){
-        $offset = ($this->page-1)*$this->limit;
+    public function generateCards()
+    {
+        $offset = ($this->page - 1) * $this->limit;
         $users = $this->userModel->getUser($this->limit, $offset);
-        foreach($users as $user){
+        foreach ($users as $user) {
             include(DIRECTORY . "/../view/template/cardUser.php");
         }
         if (empty($users) && $this->page == 1) echo "No user currently available";
@@ -93,7 +96,7 @@ class UserController
         require_once DIRECTORY . "/../view/user/ProfileSettingsPage.php";
     }
 
-        public function showEditProfilePage($params = [])
+    public function showEditProfilePage($params = [])
     {
         require_once DIRECTORY . "/../view/user/EditProfilePage.php";
     }
@@ -101,8 +104,14 @@ class UserController
     public function editProfile()
     {
         header('Content-Type: application/json');
+        if (!empty($_POST['photo_size'])) {
+            if ($_POST['photo_size'] > MAX_SIZE_PROFILE) {
+                http_response_code(413);
+                echo json_encode(["error" => "File size must be less than 800KB"]);
+                exit;
+            }
+        }
         http_response_code(200);
-    
         $existingUserData = $this->userModel->getUserById($_POST['user_id']);
         $updateData = [];
 
@@ -116,10 +125,10 @@ class UserController
         //  print_r($updateData);
         echo json_encode(["redirect_url" => "/settings/" . $_POST['user_id']]);
     }
-    
+
     private function checkAndUpdateField($newData, $existingData)
     {
-        if(empty($newData)){
+        if (empty($newData)) {
             return $existingData;
         } else {
             if (strcmp($newData, $existingData) !== 0) {
@@ -129,7 +138,7 @@ class UserController
             }
         }
     }
-    
+
 
     /**ADMIN */
     /**Manage ALL User */
@@ -145,31 +154,35 @@ class UserController
     }
 
     /**Delete User */
-    public function deleteUser(){
+    public function deleteUser()
+    {
         header('Content-Type: application/json');
         http_response_code(200);
-        
+
         $this->userModel->deleteUser($_POST['user_id']);
         unset($_SESSION['user_id']);
         echo json_encode(["redirect_url" => "/manage-user"]);
     }
 
-    public function changeToAdmin(){
+    public function changeToAdmin()
+    {
         header('Content-Type: application/json');
         http_response_code(200);
-        
+
         $this->userModel->changeToAdmin($_POST['user_id']);
         echo json_encode(["redirect_url" => "/user-detail/" . $_POST['user_id']]);
     }
-    public function changeToUser(){
+    public function changeToUser()
+    {
         header('Content-Type: application/json');
         http_response_code(200);
-        
+
         $this->userModel->changeToUser($_POST['user_id']);
         echo json_encode(["redirect_url" => "/user-detail/" . $_POST['user_id']]);
     }
 
-    public function showUserDetailPage($params = []){
+    public function showUserDetailPage($params = [])
+    {
         if ($this->middleware->isAdmin()) {
             require_once DIRECTORY . "/../view/user/UserDetailPage.php";
         } else if ($this->middleware->isAuthenticated()) {

@@ -77,6 +77,7 @@
                                 </div>
                                 <div>
                                     <p>Profile Photo</p>
+                                    <p class="text-red">File size must be less than 800KB</p>
                                     <input type="file" id="photoProfile" name="photoProfile" accept="image/*" class="inputFile"/>
                                     <label for="photoProfile" class="file-style">
                                         <div class="centered">
@@ -91,6 +92,7 @@
                                             <p class="button-text">Upload Profile Photo</p>
                                         </div>
                                     </label>
+                                    <div class="error" id="error-upload"></div>
                                     <div class="file-name" id="display-file-name"></div>
                                 </div>
                                 <div class="btn-contain">
@@ -111,7 +113,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button id="saveButton" class="button-white button-text" onclick="succes()">Save</button>
+                                    <button id="saveButton" class="button-white button-text">Save</button>
                                 </div>
                         </form>
                     </div>
