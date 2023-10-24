@@ -269,6 +269,13 @@ input:required {
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
+.text-warning{
+    color: var(--red);
+    font-size: 0.7rem;
+    text-align: left;
+    display: block;
+    width: 100%;
+}
 
 
 select {
