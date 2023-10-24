@@ -165,6 +165,18 @@ function succes(){
     setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 1700);
 }
 
+
+profilePicture.addEventListener('change', () => {
+    let message = document.getElementById("error-upload");
+    if (profilePicture.files[0]) {
+        if (profilePicture.files[0].size > 8 * 1024) {
+            message.innerHTML = "File size must be less than 800KB";
+        } else {
+            message.innerHTML = ""; 
+        }
+    }
+});
+
 editProfile && editProfile.addEventListener('submit', async (e) => {
     e.preventDefault();
     let xhr = new XMLHttpRequest();
