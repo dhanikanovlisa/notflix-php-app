@@ -59,7 +59,7 @@
                                         <label class="check-container" for="genre_<?php echo $row['genre_id']; ?>"><?php echo $row['name']; ?>
                                             <input type="checkbox" id="genre_<?php echo $row['genre_id']; ?>" name="filmGenre[]" value="<?php echo $row['genre_id']; ?>">
                                             <span class="checkmark"></span>
-    
+
                                         </label>
                                     <?php } ?>
                                 </div>
@@ -111,6 +111,7 @@
                             <div>
 
                                 <h3>Film Poster<span class="req">*</span></h3>
+                                <p class="text-warning">File size must be below 800KB</p>
                                 <input type="file" id="filmPoster" name="filmPoster" accept="image/*" class="inputFile" required />
                                 <label for="filmPoster" class="file-style">
                                     <div class="centered">
@@ -126,11 +127,13 @@
                                     </div>
                                 </label>
                                 <div class="file-name" id="display-filePoster-name"></div>
+                                <div class="error" id="film-poster-alert"></div>
                             </div>
 
                             <!--Film Video-->
                             <div>
                                 <h3>Film Video<span class="req">*</span></h3>
+                                <p class="text-warning">File size must be below 10MB</p>
                                 <input type="file" id="filmVideo" name="filmVideo" accept="video/*" required />
                                 <label for="filmVideo" class="file-style">
                                     <div class="centered">
@@ -146,9 +149,11 @@
                                     </div>
                                 </label>
                                 <div class="file-name" id="display-fileVideo-name"></div>
+                                <div class="error" id="film-video-alert"></div>
                             </div>
                             <div>
                                 <h3>Film Header<span class="req">*</span></h3>
+                                <p class="text-warning">File size must be below 800KB</p>
                                 <input type="file" id="filmHeader" name="filmHeader" accept="image/*" required />
                                 <label for="filmHeader" class="file-style">
                                     <div class="centered">
@@ -164,6 +169,7 @@
                                     </div>
                                 </label>
                                 <div class="file-name" id="display-fileHeader-name"></div>
+                                <div class="error" id="film-header-alert"></div>
                             </div>
                         </div>
                         <div class="button-container">
@@ -182,7 +188,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button id="saveButton" class="button-white button-text" onclick="succes()" aria-label="Saving Add Film">Save</button>
+                            <button id="saveButton" class="button-white button-text" aria-label="Saving Add Film">Save</button>
                         </div>
                     </div>
                 </form>

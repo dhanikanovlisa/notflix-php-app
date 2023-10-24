@@ -79,6 +79,20 @@ class FilmController
     public function addFilm()
     {
         header('Content-Type: application/json');
+        if($_POST['film_poster_size'] > MAX_SIZE_HEADER){
+            http_response_code(413);
+            echo json_encode(["error" => "Film poster size is too big"]);
+            return;
+        } else if ($_POST['film_header_size'] > MAX_SIZE_HEADER){
+            http_response_code(413);
+            echo json_encode(["error" => "Film header size is too big"]);
+            return;
+        } else if ($_POST['film_path_size'] > MAX_SIZE_VIDEO){
+            http_response_code(413);
+            echo json_encode(["error" => "Film size is too big"]);
+            return;
+        }
+
         http_response_code(200);
         $convert = turnIntoMinute($_POST['filmHourDuration'], $_POST['filmMinuteDuration']);
         $this->filmModel->insertFilm(
