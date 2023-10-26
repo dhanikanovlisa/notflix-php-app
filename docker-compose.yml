@@ -10,16 +10,23 @@ services:
       - ./src/public:/var/www/html
     networks:
       - web-postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
   postgres:
     image: postgres:latest
     env_file: .env
     ports:
       - 5431:5432
     volumes:
-      -  ./db:/var/lib/postgres/data
-      - ./migrations:/docker-entrypoint-initdb.d/01_sample.sql
+      - ./migrations:/docker-entrypoint-initdb.d
     networks:
       - web-postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      retries: 10
+      timeout: 5s
   pgadmin:
     image: dpage/pgadmin4
     environment:
