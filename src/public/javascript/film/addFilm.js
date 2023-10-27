@@ -84,13 +84,37 @@ function checkAllCheckboxes() {
 
 filmPoster.addEventListener('change', () => {
     filePosterName.textContent = "File Name: " + filmPoster.files[0].name;
+    let message = document.getElementById("film-poster-alert");
+    if (filmPoster.files[0]) {
+        if (filmPoster.files[0].size > 800 * 1024) {
+            message.innerHTML = "File size must be less than 800KB";
+        } else {
+            message.innerHTML = ""; 
+        }
+    }
 });
 filmVideo.addEventListener('change', () => {
     fileVideoName.textContent = "File Name: " + filmVideo.files[0].name;
+    let message = document.getElementById("film-video-alert");
+    if (filmVideo.files[0]) {
+        if (filmVideo.files[0].size > 10 * 1024 * 1024) {
+            message.innerHTML = "File size must be less than 10MB";
+        } else {
+            message.innerHTML = ""; 
+        }
+    }
 });
 
 filmHeader.addEventListener('change', () => {
     fileHeaderName.textContent = "File Name: " + filmHeader.files[0].name;
+    let message = document.getElementById("film-header-alert");
+    if (filmHeader.files[0]) {
+        if (filmHeader.files[0].size > 800 * 1024) {
+            message.innerHTML = "File size must be less than 800KB";
+        } else {
+            message.innerHTML = ""; 
+        }
+    }
 });
 
 
@@ -127,40 +151,6 @@ filmName && filmName.addEventListener('keyup', async (e) => {
     }
     removeErrorWarning(filmName, filmNameAlert);
 });
-
-filmPoster.addEventListener('change', () => {
-    let message = document.getElementById("film-poster-alert");
-    if (filmPoster.files[0]) {
-        if (filmPoster.files[0].size > 800 * 1024) {
-            message.innerHTML = "File size must be less than 800KB";
-        } else {
-            message.innerHTML = ""; 
-        }
-    }
-});
-
-filmVideo.addEventListener('change', () => {
-    let message = document.getElementById("film-video-alert");
-    if (filmVideo.files[0]) {
-        if (filmVideo.files[0].size > 10 * 1024 * 1024) {
-            message.innerHTML = "File size must be less than 10MB";
-        } else {
-            message.innerHTML = ""; 
-        }
-    }
-});
-
-filmHeader.addEventListener('change', () => {
-    let message = document.getElementById("film-header-alert");
-    if (filmHeader.files[0]) {
-        if (filmHeader.files[0].size > 800 * 1024) {
-            message.innerHTML = "File size must be less than 800KB";
-        } else {
-            message.innerHTML = ""; 
-        }
-    }
-});
-
 
 addFilmForm && addFilmForm.addEventListener('submit', async (e) => {
     if (checkAllCheckboxes() == false) {

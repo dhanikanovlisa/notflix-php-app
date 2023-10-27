@@ -117,6 +117,19 @@ class FilmController
     public function editFilm()
     {
         header('Content-Type: application/json');
+        if($_POST['film_poster_size'] > MAX_SIZE_POSTER  && !empty($_POST['film_poster_size'])){
+            http_response_code(413);
+            echo json_encode(["error" => "Film poster size is too big"]);
+            return;
+        } else if ($_POST['film_header_size'] > MAX_SIZE_HEADER && !empty($_POST['film_header_size'])){
+            http_response_code(413);
+            echo json_encode(["error" => "Film header size is too big"]);
+            return;
+        } else if ($_POST['film_path_size'] > MAX_SIZE_VIDEO && !empty($_POST['film_path_size'])){
+            http_response_code(413);
+            echo json_encode(["error" => "Film size is too big"]);
+            return;
+        }
         http_response_code(200);
 
         if (empty($_POST['filmHourDuration']) && !empty($_POST['filmMinuteDuration'])) {

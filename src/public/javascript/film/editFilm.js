@@ -46,14 +46,38 @@ function closeModal() {
 
 filmPoster.addEventListener('change', () => {
     filePosterName.textContent = "File Name: " + filmPoster.files[0].name;
+    let message = document.getElementById("film-poster-alert");
+        if (filmPoster.files[0]) {
+        if (filmPoster.files[0].size > 800 * 1024) {
+            message.innerHTML = "File size must be less than 800KB";
+        } else {
+            message.innerHTML = ""; 
+        }
+    }
 });
 
 filmVideo.addEventListener('change', () => {
     fileVideoName.textContent = "File Name: " + filmVideo.files[0].name;
+    let message = document.getElementById("film-video-alert");
+    if (filmVideo.files[0]) {
+        if (filmVideo.files[0].size > 10 * 1024 * 1024) {
+            message.innerHTML = "File size must be less than 10MB";
+        } else {
+            message.innerHTML = ""; 
+        }
+    }
 });
 
 filmHeader.addEventListener('change', () => {
     fileHeaderName.textContent = "File Name: " + filmHeader.files[0].name;
+    if (filmHeader.files[0]) {
+        let message = document.getElementById("film-header-alert");
+        if (filmHeader.files[0].size > 800 * 1024) {
+            message.innerHTML = "File size must be less than 800KB";
+        } else {
+            message.innerHTML = ""; 
+        }
+    }
 });
 
 function succes() {
@@ -109,30 +133,56 @@ editFilmForm && editFilmForm.addEventListener('submit', async (e) => {
     formData.append('filmMinuteDuration', filmMinuteDuration.value);
     if (filmPoster.files[0] != undefined) {
         formData.append('film_poster', filmPoster.files[0].name);
+        formData.append('film_poster_size', filmPoster.files[0].size);
     } else {
         formData.append('film_poster', '');
     }
 
     if (filmVideo.files[0] != undefined) {
         formData.append('film_path', filmVideo.files[0].name);
+        formData.append('fim_path_size', filmVideo.files[0].size);
     } else {
         formData.append('film_path', '');
     }
 
     if (filmHeader.files[0] != undefined) {
         formData.append('film_header', filmHeader.files[0].name);
+        formData.append('film_header_size', filmHeader.files[0].size);
     } else {
         formData.append('film_header', '');
+        
     }
     formData.append('date_release', date.value);
 
 
     xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            const response = JSON.parse(xhr.responseText);
-            setTimeout(() => {
-                location.replace(response.redirect_url);
-            }, 1500);
+        if (xhr.readyState === 4) {
+            if(xhr.status === 200){
+                const response = JSON.parse(xhr.responseText);
+                let messagePoster = document.getElementById("film-poster-alert");
+                let messageVideo = document.getElementById("film-video-alert");
+                let messageHeader = document.getElementById("film-header-alert");
+                messagePoster.innerHTML = "";
+                messageVideo.innerHTML = "";
+                messageHeader.innerHTML = "";
+                succes();
+                setTimeout(() => {
+                    location.replace(response.redirect_url);
+                }, 1500);
+            } else if (xhr.status === 413){
+                const response = JSON.parse(xhr.responseText);
+                let errorMessage = response.error;
+                if (errorMessage.includes("poster")) {
+                    let message = document.getElementById("film-poster-alert");
+                    message.innerHTML = errorMessage;
+                } else if(errorMessage.includes('header')){
+                    let message = document.getElementById("film-header-alert");
+                    message.innerHTML = errorMessage;
+                } else if(errorMessage.includes('video')){
+                    let message = document.getElementById("film-video-alert");
+                    message.innerHTML = errorMessage;
+                }
+            }
         }
     }
     xhr.send(formData);

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+a<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -140,6 +140,7 @@
                                         </div>
                                     </label>
                                     <div class="file-name" id="display-filePoster-name"></div>
+                                    <div class="error" id="film-poster-alert"></div>
                                 </div>
 
                                 <!--Film Video-->
@@ -160,6 +161,7 @@
                                         </div>
                                     </label>
                                     <div class="file-name" id="display-fileVideo-name"></div>
+                                    <div class="error" id="film-video-alert"></div>
                                 </div>
                                 <div>
                                     <h3>Film Header</h3>
@@ -178,6 +180,7 @@
                                         </div>
                                     </label>
                                     <div class="file-name" id="display-fileHeader-name"></div>
+                                    <div class="error" id="film-header-alert"></div>
                                 </div>
                             </div>
                             <div class="button-container">

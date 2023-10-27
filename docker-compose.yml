@@ -1,27 +1,24 @@
 version: '3.3'
 services:
-  web:
+  notflix-app:
     image: tubes-1:latest
+    build: .
     env_file: .env
     ports:
       - 8080:80
     volumes:
       - ./src/app:/var/www/app
       - ./src/public:/var/www/html
-    networks:
-      - web-postgres
     depends_on:
-      postgres:
+      php-db:
         condition: service_healthy
-  postgres:
+  php-db:
     image: postgres:latest
     env_file: .env
     ports:
       - 5431:5432
     volumes:
       - ./migrations:/docker-entrypoint-initdb.d
-    networks:
-      - web-postgres
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
@@ -34,8 +31,3 @@ services:
       PGADMIN_DEFAULT_PASSWORD: password
     ports:
       - 8081:80
-
-
-networks:
-  web-postgres:
-    driver: bridge
