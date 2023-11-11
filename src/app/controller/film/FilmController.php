@@ -6,12 +6,14 @@ require_once  DIRECTORY . '/../utils/duration.php';
 require_once  DIRECTORY . '/../models/filmGenre.php';
 require_once  DIRECTORY . '/../models/watchlist.php';
 require_once  DIRECTORY . '/../middlewares/AuthenticationMiddleware.php';
+require_once  DIRECTORY . '/../clients/RestClient.php';
 class FilmController
 {
     private $filmModel;
     private $filmGenreModel;
     private $watchlistModel;
     private $middleware;
+    private $restClient;
 
     private int $limit;
     private int $page;
@@ -22,6 +24,7 @@ class FilmController
         $this->filmGenreModel = new FilmGenreModel();
         $this->watchlistModel = new WatchListModel();
         $this->middleware = new AuthenticationMiddleware();
+        $this->restClient = new RestClient();
         $this->page = isset($_GET['page']) && $_GET['page']>0 ? $_GET['page'] : 1;
         $this->limit = isset($_GET['limit']) && $_GET['limit']>0 ? $_GET['limit'] : 12;
     }
@@ -264,5 +267,11 @@ class FilmController
         } else {
             header("Location: /login");
         }
+    }
+
+    public function getAllPremiumFilm(){
+       $premiumFilms = $this->restClient->get("/premium-film");
+       $premiumFilms = json_decode($premiumFilms, true);
+       return $premiumFilms; 
     }
 }
