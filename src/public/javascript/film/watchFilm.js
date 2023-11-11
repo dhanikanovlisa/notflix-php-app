@@ -56,3 +56,21 @@ buttonWatchlist && buttonWatchlist.addEventListener('click', ()=>{
         }
     }
 });
+
+const heart = document.getElementById('heart');
+
+heart && heart.addEventListener('click', function() {
+    this.classList.toggle('is_animating');
+    if (this.classList.contains('like')) {
+        this.classList.remove('like');
+        this.className += ' dislike';
+    }else {
+        this.classList.remove('dislike');
+        this.className += ' like';
+    }
+});
+heart && heart.addEventListener('animationend', function() {
+    if (this.classList.contains('dislike')) {
+        this.classList.toggle('is_animating');
+    }
+});
