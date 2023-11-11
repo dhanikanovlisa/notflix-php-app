@@ -46,7 +46,11 @@
     <section>
         <header>
             <h1><?php echo htmlspecialchars($filmData['title']); ?></h1>
-            <?php $filmController->generateWatchlistButton($filmID)?>
+            <div class="heartcontainer">
+                <div class="heart" id="heart"></div>
+                <div class="likecounter">123</div>
+                <?php $filmController->generateWatchlistButton($filmID)?>
+            </div>
         </header>
         <video controls id='video-player' >
             <?php $filmController->generateFilm($filmData['film_path'], $startTime); ?>
