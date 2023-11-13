@@ -24,7 +24,7 @@
         require_once DIRECTORY . '/../controller/user/HomePageController.php';
         $home = new HomePageController();
         $film_count = $home->filmCount();
-        $home->getAllPremiumFilm();
+        // $home->getAllPremiumFilm();
         if ($film_count == 0) {?>
             <div class="img-header"></div>
             <div class="body">
