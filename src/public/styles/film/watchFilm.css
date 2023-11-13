@@ -124,10 +124,6 @@ h2 {
     background-size:2900%;
   }
   
-  .heart:hover {
-    background-position:right;
-  }
-  
   .is_animating {
     animation: heart-burst .8s steps(28) 1;
   }
