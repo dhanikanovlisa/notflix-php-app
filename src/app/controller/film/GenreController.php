@@ -69,14 +69,14 @@ class GenreController
         $items_per_page = 12;
         $current_page = $this->page;
 
-        include(DIRECTORY . "/../view/template/pagination.php");
+        include(DIRECTORY . "/../view/components/pagination.php");
     }
 
     public function generateCards(){
         $offset = ($this->page-1)*$this->limit;
         $genres = $this->genreModel->getGenre($this->limit, $offset);
         foreach($genres as $genre){
-            include(DIRECTORY . "/../view/template/cardGenre.php");
+            include(DIRECTORY . "/../view/components/cardGenre.php");
         }
         if (empty($genres) && $this->page == 1) echo "No user currently available";
     }

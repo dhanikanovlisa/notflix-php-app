@@ -9,10 +9,10 @@
         <!---Icon--->
         <link rel="icon" href="images/icon/logo.ico">
         <!---Global CSS--->
-        <link rel="stylesheet" type="text/css" href="styles/template/globals.css">
-        <link rel="stylesheet" type="text/css" href="/styles/template/navbar.css" defer>
-        <link rel="stylesheet" type="text/css"href="styles/template/cardMovie.css" defer>
-        <link rel="stylesheet" type="text/css"href="styles/template/pagination.css" defer>
+        <link rel="stylesheet" type="text/css" href="styles/components/globals.css">
+        <link rel="stylesheet" type="text/css" href="/styles/components/navbar.css" defer>
+        <link rel="stylesheet" type="text/css"href="styles/components/cardMovie.css" defer>
+        <link rel="stylesheet" type="text/css"href="styles/components/pagination.css" defer>
         <!---Page specify CSS--->
         <script type="text/javascript" src="javascript/navbar/navbar.js" defer></script>
         <script type="text/javascript" src="javascript/user/search.js" defer></script>
@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    <?php include (DIRECTORY. "/../view/template/NavbarUser.php");?>
+    <?php include (DIRECTORY. "/../view/components/NavbarUser.php");?>
     <?php
         require_once(DIRECTORY . '/../controller/search/SearchPageController.php');
         $searchPageController = new SearchPageController();

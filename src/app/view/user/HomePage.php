@@ -8,18 +8,20 @@
     <!---Icon--->
     <link rel="icon" href="images/icon/logo.ico">
     <!---Global CSS--->
-    <link rel="stylesheet" type="text/css" href="/styles/template/globals.css">
-    <link rel="stylesheet" type="text/css" href="/styles/template/navbar.css">
-    <link rel="stylesheet" type="text/css" href="/styles/template/cardMovie.css">
-    <link rel="stylesheet" type="text/css" href="/styles/template/toast.css">
-    <link rel="stylesheet" type="text/css" href="/styles/template/pagination.css">
+    <link rel="stylesheet" type="text/css" href="/styles/components/globals.css">
+    <link rel="stylesheet" type="text/css" href="/styles/components/navbar.css">
+    <link rel="stylesheet" type="text/css" href="/styles/components/cardMovie.css">
+    <link rel="stylesheet" type="text/css" href="/styles/components/toast.css">
+    <link rel="stylesheet" type="text/css" href="/styles/components/pagination.css">
+    <link rel="stylesheet" type="text/css" href="styles/components/loading.css">
     <!---Page specify CSS--->
     <link rel="stylesheet" type="text/css" href="/styles/user/homepage.css">
     <!-- JS --->
     <script type="text/javascript" src="/javascript/user/home.js" defer></script>
 </head>
 <body>
-    <?php include (DIRECTORY. "/../view/template/NavbarUser.php"); ?>
+    <?php include (DIRECTORY. "/../view/components/NavbarUser.php"); ?>
+    <?php include(DIRECTORY . "/../view/components/loading.php"); ?>
     <?php
         require_once DIRECTORY . '/../controller/user/HomePageController.php';
         $home = new HomePageController();
@@ -70,7 +72,7 @@
                 </div>
             </div>
         <?php }?>
-        <?php include(DIRECTORY. "/../view/template/toast.php"); ?>
+        <?php include(DIRECTORY. "/../view/components/toast.php"); ?>
 </body>
 
 </html>

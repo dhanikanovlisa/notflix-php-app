@@ -9,17 +9,17 @@ a<!DOCTYPE html>
     <!---Icon--->
     <link rel="icon" href="/images/icon/logo.ico">
     <!---Global CSS--->
-    <link rel="stylesheet" type="text/css" href="/styles/template/globals.css">
-    <link rel="stylesheet" type="text/css" href="/styles/template/Navbar.css">
-    <link rel="stylesheet" type="text/css" href="/styles/template/confirmationModal.css">
-    <link rel="stylesheet" type="text/css" href="/styles/template/toast.css">
+    <link rel="stylesheet" type="text/css" href="/styles/components/globals.css">
+    <link rel="stylesheet" type="text/css" href="/styles/components/Navbar.css">
+    <link rel="stylesheet" type="text/css" href="/styles/components/confirmationModal.css">
+    <link rel="stylesheet" type="text/css" href="/styles/components/toast.css">
     <!---Page specify CSS--->
     <link rel="stylesheet" type="text/css" href="/styles/film/editFilm.css">
 </head>
 
 <body>
     <?php
-    include(DIRECTORY . "/../view/template/NavbarUser.php");
+    include(DIRECTORY . "/../view/components/NavbarUser.php");
     require_once DIRECTORY . '/../utils/duration.php';
     $hours = listofHour();
     $minutes = listofMinutes();
@@ -213,7 +213,7 @@ a<!DOCTYPE html>
         var filmID = <?php echo json_encode($filmID); ?>;
     </script>
     <script src="/javascript/film/editFilm.js" defer></script>
-    <?php include(DIRECTORY . "/../view/template/toast.php"); ?>
+    <?php include(DIRECTORY . "/../view/components/toast.php"); ?>
 </body>
 
 
