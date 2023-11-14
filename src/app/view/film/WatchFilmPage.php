@@ -47,8 +47,7 @@
         <header>
             <h1><?php echo htmlspecialchars($filmData['title']); ?></h1>
             <div class="heartcontainer">
-                <div class="heart" id="heart"></div>
-                <div class="likecounter"><?php $filmController->getLikesCount($filmID)?></div>
+                <?php $filmController->generateLikesButton($filmID)?>
                 <?php $filmController->generateWatchlistButton($filmID)?>
             </div>
         </header>
