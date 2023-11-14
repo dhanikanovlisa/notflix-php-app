@@ -29,8 +29,8 @@ class FilmController
         $this->middleware = new AuthenticationMiddleware();
         $this->soapClient = new SoapCaller();
         $this->restClient = new RestClient();
-        $this->page = isset($_GET['page']) && $_GET['page']>0 ? $_GET['page'] : 1;
-        $this->limit = isset($_GET['limit']) && $_GET['limit']>0 ? $_GET['limit'] : 12;
+        $this->page = isset($_GET['page']) && $_GET['page'] > 0 ? $_GET['page'] : 1;
+        $this->limit = isset($_GET['limit']) && $_GET['limit'] > 0 ? $_GET['limit'] : 12;
     }
 
     /**Get Film */
@@ -64,37 +64,39 @@ class FilmController
         echo json_encode(["isExist" => $isExist]);
     }
 
-    public function generatePagination(){
+    public function generatePagination()
+    {
         $total_records = $this->filmModel->getFilmCount();
-        if($total_records) $total_records=$total_records['count'];
+        if ($total_records) $total_records = $total_records['count'];
         $items_per_page = 12;
         $current_page = $this->page;
 
         include(DIRECTORY . "/../view/components/pagination.php");
     }
 
-    public function generateCards(){
-        $offset = ($this->page-1)*$this->limit;
+    public function generateCards()
+    {
+        $offset = ($this->page - 1) * $this->limit;
         $films = $this->filmModel->getFilm($this->limit, $offset);
-        foreach($films as $film){
+        foreach ($films as $film) {
             include(DIRECTORY . "/../view/components/cardMovie.php");
         }
         if (empty($films) && $this->page == 1) echo "No film currently available";
     }
-    
+
     /**Add Film */
     public function addFilm()
     {
         header('Content-Type: application/json');
-        if($_POST['film_poster_size'] > MAX_SIZE_HEADER){
+        if ($_POST['film_poster_size'] > MAX_SIZE_HEADER) {
             http_response_code(413);
             echo json_encode(["error" => "Film poster size is too big"]);
             return;
-        } else if ($_POST['film_header_size'] > MAX_SIZE_HEADER){
+        } else if ($_POST['film_header_size'] > MAX_SIZE_HEADER) {
             http_response_code(413);
             echo json_encode(["error" => "Film header size is too big"]);
             return;
-        } else if ($_POST['film_path_size'] > MAX_SIZE_VIDEO){
+        } else if ($_POST['film_path_size'] > MAX_SIZE_VIDEO) {
             http_response_code(413);
             echo json_encode(["error" => "Film size is too big"]);
             return;
@@ -124,21 +126,42 @@ class FilmController
     public function editFilm()
     {
         header('Content-Type: application/json');
-        if($_POST['film_poster_size'] > MAX_SIZE_POSTER  && !empty($_POST['film_poster_size'])){
-            http_response_code(413);
-            echo json_encode(["error" => "Film poster size is too big"]);
-            return;
-        } else if ($_POST['film_header_size'] > MAX_SIZE_HEADER && !empty($_POST['film_header_size'])){
-            http_response_code(413);
-            echo json_encode(["error" => "Film header size is too big"]);
-            return;
-        } else if ($_POST['film_path_size'] > MAX_SIZE_VIDEO && !empty($_POST['film_path_size'])){
-            http_response_code(413);
-            echo json_encode(["error" => "Film size is too big"]);
-            return;
-        }
-        http_response_code(200);
+        
+        // if (!empty($_POST['film_poster_size']) || !empty($_POST['film_header_size']) || !empty($_POST['film_path_size'])) {
+        //     print_r("yaallah");
+        //     if ($_POST['film_poster_size'] > MAX_SIZE_POSTER || $_POST['film_header_size'] > MAX_SIZE_HEADER || $_POST['film_path_size'] > MAX_SIZE_VIDEO) {
+        //         http_response_code(413);
+        //         echo json_encode(["error" => "Size is too big"]);
+        //         return;
+        //     }
+        // }
 
+        if(!empty($_POST['film_poster_size'])){
+            if($_POST['film_poster_size']){
+                http_response_code(413);
+                echo json_encode(["error" => "Size is too big"]);
+                exit;
+            }
+        }
+
+        if(!empty($_POST['film_header_size'])){
+            if($_POST['film_poster_size']){
+                http_response_code(413);
+                echo json_encode(["error" => "Size is too big"]);
+                exit;
+            }
+        }
+
+        if(!empty($_POST['film_path_size'])){
+            if($_POST['film_poster_size']){
+                http_response_code(413);
+                echo json_encode(["error" => "Size is too big"]);
+                exit;
+            }
+        }
+
+
+        
         if (empty($_POST['filmHourDuration']) && !empty($_POST['filmMinuteDuration'])) {
             $convert = turnIntoMinute(0, (int)($_POST['filmMinuteDuration']));
         } else if (empty($_POST['filmMinuteDuration']) && !empty($_POST['filmHourDuration'])) {
@@ -159,27 +182,30 @@ class FilmController
         $updateData['film_path'] = $this->checkAndUpdateField($_POST['film_path'], $existingFilmData['film_path']);
         $updateData['film_poster'] = $this->checkAndUpdateField($_POST['film_poster'], $existingFilmData['film_poster']);
         $updateData['date_release'] = $this->checkAndUpdateField($_POST['date_release'], $existingFilmData['date_release']);
-
-
+        
+        
         $this->filmModel->updateFilm($_POST['film_id'], $updateData);
 
         // Update film genre
-        if(!empty($_POST['filmGenre'])){
+        if (!empty($_POST['filmGenre'])) {
             $this->filmGenreModel->deleteFilmGenre($_POST['film_id']);
             foreach ($_POST['filmGenre'] as $update) {
                 $this->filmGenreModel->insertFilmGenre($_POST['film_id'], $update);
             }
         }
+        http_response_code(200);
         echo json_encode(["redirect_url" => "/detail-film/" . $_POST['film_id']]);
     }
 
-    public function generateWatchlistButton($filmID){
+    public function generateWatchlistButton($filmID)
+    {
         $add = "<button id='watchlist-button' class='text-black' value='add'>Add to Watchlist";
         $remove = "<button id='watchlist-button' class='text-black' value='remove'>Remove from Watchlist";
-        echo ($this->watchlistModel->isFilmOnWatchList($_SESSION['user_id'],$filmID)) ? $remove:$add;
+        echo ($this->watchlistModel->isFilmOnWatchList($_SESSION['user_id'], $filmID)) ? $remove : $add;
     }
 
-    public function generateFilm($filmPath, $startTime){
+    public function generateFilm($filmPath, $startTime)
+    {
         $response = "<source src='../storage/film/" . htmlspecialchars($filmPath) . '#t=' . $startTime . "' type='video/mp4'>";
         echo $response;
     }
@@ -269,17 +295,20 @@ class FilmController
         }
     }
 
-    public function getAllPremiumFilm(){
-       $premiumFilms = $this->restClient->get("/premium-film");
-       $premiumFilms = json_decode($premiumFilms, true);
-       return $premiumFilms; 
+    public function getAllPremiumFilm()
+    {
+        $premiumFilms = $this->restClient->get("/premium-film");
+        $premiumFilms = json_decode($premiumFilms, true);
+        return $premiumFilms;
     }
 
-    public function getLikesCount($filmID){
+    public function getLikesCount($filmID)
+    {
         return $this->filmModel->getFilmByID($filmID)['likes_count'];
     }
 
-    public function generateLikesButton($film_id){
+    public function generateLikesButton($film_id)
+    {
         $params = array(
             "film_id" => $film_id,
             "user_id" => $_SESSION['user_id'],
@@ -287,18 +316,19 @@ class FilmController
         $isUserLikeFilm = $this->soapClient->call("isUserLikeFilm", array($params))->return;
         $likescount = $this->getLikesCount($film_id);
 
-        echo 
-            "<div class='heart ".($isUserLikeFilm?"like":"dislike")."' id='heart'></div>
-            <div class='likecounter' id='likecounter'>".$likescount."</div>";
+        echo
+        "<div class='heart " . ($isUserLikeFilm ? "like" : "dislike") . "' id='heart'></div>
+            <div class='likecounter' id='likecounter'>" . $likescount . "</div>";
     }
 
-    public function addLike(){
+    public function addLike()
+    {
         $params = array(
             "film_id" => $_POST['film_id'],
             "user_id" => $_SESSION['user_id'],
         );
         header('Content-Type: application/json');
-        if ($this->soapClient->call("isUserLikeFilm", array($params))->return){
+        if ($this->soapClient->call("isUserLikeFilm", array($params))->return) {
             http_response_code(200);
             echo json_encode(["likes_count" => $this->getLikesCount($_POST['film_id'])]);
             return;
@@ -310,13 +340,14 @@ class FilmController
         echo json_encode(["likes_count" => $likes_count]);
     }
 
-    public function deleteLike(){
+    public function deleteLike()
+    {
         $params = array(
             "film_id" => $_POST['film_id'],
             "user_id" => $_SESSION['user_id'],
         );
         header('Content-Type: application/json');
-        if (!$this->soapClient->call("isUserLikeFilm", array($params))->return){
+        if (!$this->soapClient->call("isUserLikeFilm", array($params))->return) {
             http_response_code(200);
             echo json_encode(["likes_count" => $this->getLikesCount($_POST['film_id'])]);
             return;

@@ -199,7 +199,7 @@ a<!DOCTYPE html>
                                         </div>
                                     </div>
                                 </div>
-                                <button id="saveButton" class="button-white button-text" onclick="succes()" aria-label="Save Edit Film">Save</button>
+                                <button id="saveButton" class="button-white button-text" aria-label="Save Edit Film">Save</button>
                             </div>
                         </div>
                     </form>
