@@ -28,7 +28,7 @@ class WatchListPageController{
         $offset = ($this->page-1)*$this->limit;
         $lf =  $this->watchListModel->getWatchListFilms($this->userID, $this->limit, $offset);
         foreach($lf as $film){
-            include(DIRECTORY . "/../view/template/cardMovie.php");
+            include(DIRECTORY . "/../view/components/cardMovie.php");
         }
         if(empty($lf) && $this->page==1) echo "Your watchlist is empty";
     }
@@ -39,7 +39,7 @@ class WatchListPageController{
         $items_per_page = $this->limit;
         $current_page = $this->page;
 
-        include(DIRECTORY . "/../view/template/pagination.php");
+        include(DIRECTORY . "/../view/components/pagination.php");
     }
 
     public function showWatchListPage()

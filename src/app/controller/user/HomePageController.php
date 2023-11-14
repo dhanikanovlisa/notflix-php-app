@@ -45,14 +45,14 @@ class HomePageController{
         $items_per_page = 12;
         $current_page = $this->page;
 
-        include(DIRECTORY . "/../view/template/pagination.php");
+        include(DIRECTORY . "/../view/components/pagination.php");
     }
 
     public function generateCards(){
         $offset = ($this->page-1)*$this->limit;
         $films = $this->filmModel->getFilm($this->limit, $offset);
         foreach($films as $film){
-            include(DIRECTORY . "/../view/template/cardMovie.php");
+            include(DIRECTORY . "/../view/components/cardMovie.php");
         }
         if (empty($films) && $this->page == 1) echo "No film currently available";
     }

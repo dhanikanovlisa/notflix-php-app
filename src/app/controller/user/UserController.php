@@ -48,7 +48,7 @@ class UserController
         $items_per_page = 12;
         $current_page = $this->page;
 
-        include(DIRECTORY . "/../view/template/pagination.php");
+        include(DIRECTORY . "/../view/components/pagination.php");
     }
 
     public function generateCards()
@@ -56,7 +56,7 @@ class UserController
         $offset = ($this->page - 1) * $this->limit;
         $users = $this->userModel->getUser($this->limit, $offset);
         foreach ($users as $user) {
-            include(DIRECTORY . "/../view/template/cardUser.php");
+            include(DIRECTORY . "/../view/components/cardUser.php");
         }
         if (empty($users) && $this->page == 1) echo "No user currently available";
     }

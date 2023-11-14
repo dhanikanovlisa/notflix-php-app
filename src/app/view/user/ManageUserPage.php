@@ -9,17 +9,17 @@
     <!-- Icon -->
     <link rel="icon" href="images/icon/logo.ico">
     <!-- Global CSS -->
-    <link rel="stylesheet" type="text/css" href="styles/template/globals.css">
-    <link rel="stylesheet" type="text/css" href="styles/template/Navbar.css">
-    <link rel="stylesheet" type="text/css" href="styles/template/cardUser.css">
-    <link rel="stylesheet" type="text/css" href="/styles/template/pagination.css">
+    <link rel="stylesheet" type="text/css" href="styles/components/globals.css">
+    <link rel="stylesheet" type="text/css" href="styles/components/Navbar.css">
+    <link rel="stylesheet" type="text/css" href="styles/components/cardUser.css">
+    <link rel="stylesheet" type="text/css" href="/styles/components/pagination.css">
     <!-- Page-specific CSS -->
     <link rel="stylesheet" type="text/css" href="styles/admin/manageUser.css">
     <!-- Include the external JavaScript file -->
 </head>
 
 <body>
-    <?php include(DIRECTORY . "/../view/template/NavbarUser.php"); ?>
+    <?php include(DIRECTORY . "/../view/components/NavbarUser.php"); ?>
     <?php
     require_once DIRECTORY . '/../controller/user/UserController.php';
     $user = new UserController();

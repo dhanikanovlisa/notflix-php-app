@@ -9,15 +9,15 @@
     <!---Icon--->
     <link rel="icon" href="images/icon/logo.ico">
     <!---Global CSS--->
-    <link rel="stylesheet" type="text/css" href="/styles/template/globals.css">
-    <link rel="stylesheet" type="text/css" href="/styles/template/navbar.css">
+    <link rel="stylesheet" type="text/css" href="/styles/components/globals.css">
+    <link rel="stylesheet" type="text/css" href="/styles/components/navbar.css">
     <!---Page specify CSS--->
     <link rel="stylesheet" type="text/css" href="/styles/film/watchFilm.css">
     <script type="text/javascript" src="/javascript/film/watchFilm.js" defer></script>
 </head>
 
 <body>
-    <?php include(DIRECTORY. "/../view/template/NavbarUser.php"); ?>
+    <?php include(DIRECTORY. "/../view/components/NavbarUser.php"); ?>
     <?php
     $filmID = $params['id'];
     /**IF someone tries to access URL */

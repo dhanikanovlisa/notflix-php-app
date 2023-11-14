@@ -9,14 +9,14 @@
     <!---Icon--->
     <link rel="icon" href="/images/icon/logo.ico">
     <!---Global CSS--->
-    <link rel="stylesheet" type="text/css" href="/styles/template/globals.css">
-    <link rel="stylesheet" type="text/css" href="/styles/template/Navbar.css">
+    <link rel="stylesheet" type="text/css" href="/styles/components/globals.css">
+    <link rel="stylesheet" type="text/css" href="/styles/components/Navbar.css">
     <!---Page specify CSS--->
     <link rel="stylesheet" type="text/css" href="/styles/user/profilesetting.css">
 </head>
 
 <body>
-    <?php include (DIRECTORY. "/../view/template/NavbarUser.php"); ?>
+    <?php include (DIRECTORY. "/../view/components/NavbarUser.php"); ?>
     <?php
     require_once DIRECTORY . '/../controller/user/UserController.php';
 

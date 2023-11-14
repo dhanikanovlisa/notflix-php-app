@@ -40,7 +40,7 @@ class SearchPageController{
         
         ob_start();
         foreach($lf as $film){
-            include(DIRECTORY . "/../view/template/cardMovie.php");
+            include(DIRECTORY . "/../view/components/cardMovie.php");
             $this->items_count += 1;
         }
         $response = ob_get_contents();
@@ -54,7 +54,7 @@ class SearchPageController{
         $current_page = $this->page;
         
         ob_start();
-        include(DIRECTORY . "/../view/template/pagination.php");
+        include(DIRECTORY . "/../view/components/pagination.php");
         $response = ob_get_contents();
         ob_end_clean();
 

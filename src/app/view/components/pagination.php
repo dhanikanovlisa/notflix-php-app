@@ -17,17 +17,17 @@
         if($current_page!=1){
             $target = '<';
             $is_active = false;
-            include (DIRECTORY . "/../view/template/paginationButton.php");
+            include (DIRECTORY . "/../view/components/paginationButton.php");
         }
         for($i=$start; $i<=$bound; $i++){
             $target = $i;
             $is_active=false;
             if($target==$current_page) $is_active=true;
-            include(DIRECTORY . "/../view/template/paginationButton.php");
+            include(DIRECTORY . "/../view/components/paginationButton.php");
         }
         if($current_page!=$totalpages && $total_records>0){
             $target = '>';
             $is_active = false;
-            include (DIRECTORY . "/../view/template/paginationButton.php");
+            include (DIRECTORY . "/../view/components/paginationButton.php");
         }?>
 </div>
