@@ -7,6 +7,8 @@ require_once  DIRECTORY . '/../models/filmGenre.php';
 require_once  DIRECTORY . '/../models/watchlist.php';
 require_once  DIRECTORY . '/../middlewares/AuthenticationMiddleware.php';
 require_once  DIRECTORY . '/../clients/RestClient.php';
+require_once  DIRECTORY . '/../clients/SoapClient.php';
+
 class FilmController
 {
     private $filmModel;
@@ -14,6 +16,7 @@ class FilmController
     private $watchlistModel;
     private $middleware;
     private $restClient;
+    private $soapClient;
 
     private int $limit;
     private int $page;
@@ -24,6 +27,7 @@ class FilmController
         $this->filmGenreModel = new FilmGenreModel();
         $this->watchlistModel = new WatchListModel();
         $this->middleware = new AuthenticationMiddleware();
+        $this->soapClient = new SoapCaller();
         $this->restClient = new RestClient();
         $this->page = isset($_GET['page']) && $_GET['page']>0 ? $_GET['page'] : 1;
         $this->limit = isset($_GET['limit']) && $_GET['limit']>0 ? $_GET['limit'] : 12;
@@ -169,10 +173,6 @@ class FilmController
         echo json_encode(["redirect_url" => "/detail-film/" . $_POST['film_id']]);
     }
 
-    public function getLikesCount($filmID){
-        echo $this->filmModel->getFilmByID($filmID)['likes_count'];
-    }
-
     public function generateWatchlistButton($filmID){
         $add = "<button id='watchlist-button' class='text-black' value='add'>Add to Watchlist";
         $remove = "<button id='watchlist-button' class='text-black' value='remove'>Remove from Watchlist";
@@ -205,10 +205,6 @@ class FilmController
             }
         }
     }
-
-
-
-
 
     /**Delete Film */
     public function deleteFilm()
@@ -277,5 +273,62 @@ class FilmController
        $premiumFilms = $this->restClient->get("/premium-film");
        $premiumFilms = json_decode($premiumFilms, true);
        return $premiumFilms; 
+    }
+
+    public function getLikesCount($filmID){
+        return $this->filmModel->getFilmByID($filmID)['likes_count'];
+    }
+
+    public function generateLikesButton($film_id){
+        $params = array(
+            "film_id" => $film_id,
+            "user_id" => $_SESSION['user_id'],
+        );
+        $isUserLikeFilm = $this->soapClient->call("isUserLikeFilm", array($params))->return;
+        $likescount = $this->getLikesCount($film_id);
+
+        echo 
+            "<div class='heart ".($isUserLikeFilm?"like":"dislike")."' id='heart'></div>
+            <div class='likecounter' id='likecounter'>".$likescount."</div>";
+    }
+
+    public function addLike(){
+        $params = array(
+            "film_id" => $_POST['film_id'],
+            "user_id" => $_SESSION['user_id'],
+        );
+        header('Content-Type: application/json');
+        if ($this->soapClient->call("isUserLikeFilm", array($params))->return){
+            http_response_code(200);
+            echo json_encode(["likes_count" => $this->getLikesCount($_POST['film_id'])]);
+            return;
+        }
+        $this->soapClient->call("addLikes", array($params));
+        http_response_code(200);
+
+        $likes_count = $this->filmModel->addLike($_POST['film_id']);
+        echo json_encode(["likes_count" => $likes_count]);
+    }
+
+    public function deleteLike(){
+        $params = array(
+            "film_id" => $_POST['film_id'],
+            "user_id" => $_SESSION['user_id'],
+        );
+        header('Content-Type: application/json');
+        if (!$this->soapClient->call("isUserLikeFilm", array($params))->return){
+            http_response_code(200);
+            echo json_encode(["likes_count" => $this->getLikesCount($_POST['film_id'])]);
+            return;
+        }
+        $params = array(
+            "film_id" => $_POST['film_id'],
+            "user_id" => $_SESSION['user_id'],
+        );
+        $this->soapClient->call("deleteLikes", array($params));
+        http_response_code(200);
+
+        $likes_count = $this->filmModel->deleteLike($_POST['film_id']);
+        echo json_encode(["likes_count" => $likes_count]);
     }
 }
