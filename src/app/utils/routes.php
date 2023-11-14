@@ -50,4 +50,7 @@ $route = [
     '/check/watchlist/:film_id' => ["GET" => "watchlist/WatchListPageController@isFilmOnWatchList"],
     '/add/watchlist' => ["POST" => "watchlist/WatchListPageController@addToWatchList"],
     '/delete/watchlist' => ["POST" => "watchlist/WatchListPageController@removeFromWatchList"],
+
+    '/add/like' => ["POST" => "film/FilmController@addLike"],
+    '/delete/like' => ["POST" => "film/FilmController@deleteLike"],
 ];
