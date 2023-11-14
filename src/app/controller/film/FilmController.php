@@ -169,6 +169,10 @@ class FilmController
         echo json_encode(["redirect_url" => "/detail-film/" . $_POST['film_id']]);
     }
 
+    public function getLikesCount($filmID){
+        echo $this->filmModel->getFilmByID($filmID)['likes_count'];
+    }
+
     public function generateWatchlistButton($filmID){
         $add = "<button id='watchlist-button' class='text-black' value='add'>Add to Watchlist";
         $remove = "<button id='watchlist-button' class='text-black' value='remove'>Remove from Watchlist";
