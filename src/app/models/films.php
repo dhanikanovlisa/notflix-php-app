@@ -153,4 +153,17 @@ class FilmsModel
         return $this->db->fetchAllResult();
     }
 
+    public function addLike($film_id){
+        $this->db->callQuery('UPDATE film SET likes_count = likes_count + 1 WHERE film_id = ' . $film_id);
+        $this->db->execute();
+        $this->db->callQuery('SELECT likes_count FROM film WHERE film_id = ' . $film_id);
+        return $this->db->fetchResult()['likes_count'];
+    }
+
+    public function deleteLike($film_id){
+        $this->db->callQuery('UPDATE film SET likes_count = likes_count - 1 WHERE film_id = ' . $film_id);
+        $this->db->execute();
+        $this->db->callQuery('SELECT likes_count FROM film WHERE film_id = ' . $film_id);
+        return $this->db->fetchResult()['likes_count'];
+    }
 }
