@@ -36,6 +36,11 @@
    height: 10rem;
     border-radius: 8rem;
     background-color: red;
+    flex-direction: column;
+}
+
+.upgrade{
+    padding-top: 1rem;
 }
 
 .profile img {

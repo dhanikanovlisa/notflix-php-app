@@ -20,7 +20,6 @@
     <?php
     require_once DIRECTORY . '/../controller/user/UserController.php';
 
-    
     $id = $params["id"];
     /**IF someone tries to access URL */
     $userDetail = new UserController();
@@ -40,12 +39,19 @@
                 <div class="whole-container">
                     <div class="profile">
                         <img src="<?php
-                                    if ($user["photo_profile"] == null) {
+                                    if ($userData["photo_profile"] == null) {
                                         echo "/images/assets/profile-placeholder.png";
                                     } else {
-                                        echo "/storage/profile/" . $user["photo_profile"];
+                                        echo "/storage/profile/" . $userData["photo_profile"];
                                     }
                                     ?>" alt="Profile Picture" />
+                        <div class="upgrade">
+                            <?php 
+                            if(!$userData["is_premium"]){
+                                echo '<button class="button-white button-text">Upgrade</button>';
+                            }
+                            ?>
+                        </div>
                     </div>
 
                     <div class="detail-container">
