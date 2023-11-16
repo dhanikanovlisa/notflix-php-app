@@ -36,6 +36,38 @@
    height: 10rem;
     border-radius: 8rem;
     background-color: red;
+    flex-direction: column;
+}
+
+.upgrade{
+    padding-top: 1rem;
+}
+.pending{
+    width:auto;
+    padding: 0.25rem;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    border-radius: 1rem;
+    border-color: orange;
+    background-color: yellow;
+    border-radius: 4rem;
+    border: 0.25rem solid orange;
+    font-weight: bold;
+}
+
+.rejected{
+    width:auto;
+    padding: 0.25rem;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    border-radius: 1rem;
+    border-color: red;
+    background-color: pink;
+    border-radius: 4rem;
+    border: 0.25rem solid red;
+    font-weight: bold;
 }
 
 .profile img {

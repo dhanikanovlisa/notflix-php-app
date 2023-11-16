@@ -13,6 +13,8 @@
     <link rel="stylesheet" type="text/css" href="/styles/components/Navbar.css">
     <!---Page specify CSS--->
     <link rel="stylesheet" type="text/css" href="/styles/user/profilesetting.css">
+    <!---JS--->
+    <script src="/javascript/user/profileSettings.js" defer></script>
 </head>
 
 <body>
@@ -20,13 +22,11 @@
     <?php
     require_once DIRECTORY . '/../controller/user/UserController.php';
 
-    
     $id = $params["id"];
     /**IF someone tries to access URL */
     $userDetail = new UserController();
     $userData = $userDetail->getUserByID($id);
     $totalRow = count($userData);
-
     if ($totalRow == 0) {
         require_once  DIRECTORY . '/../view/conditional/NotFound.php';
         exit;
@@ -40,12 +40,34 @@
                 <div class="whole-container">
                     <div class="profile">
                         <img src="<?php
-                                    if ($user["photo_profile"] == null) {
+                                    if ($userData["photo_profile"] == null) {
                                         echo "/images/assets/profile-placeholder.png";
                                     } else {
-                                        echo "/storage/profile/" . $user["photo_profile"];
+                                        echo "/storage/profile/" . $userData["photo_profile"];
                                     }
                                     ?>" alt="Profile Picture" />
+                        <div class="upgrade">
+                            
+                        <?php 
+                                $status = $userDetail->checkStatus();
+                                if (!($status == null)) {
+                                    if($status === "PENDING"){
+                                        echo '<div class="pending">' . $status . '</div>';
+                                    } else if ($status === "ACCEPTED"){
+                                        echo '<h3>Premium</h3>';
+                                    } else if($status === "REJECTED"){
+                                        echo '<div class="rejected">' . $status . '</div>';
+                                    }
+                                } else {
+                                    if (!$userData["is_premium"]) {
+                                        echo '<button id="upgradeButton" class="button-white button-text" onclick="upgradeButtonClick()">Upgrade</button>';
+                                    } else {
+                                        echo '<h3>Premium User</h3>';
+                                    }
+                                }
+                                ?>
+
+                        </div>
                     </div>
 
                     <div class="detail-container">

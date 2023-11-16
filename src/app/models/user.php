@@ -102,5 +102,11 @@ class UserModel{
         $this->db->bind('user_id', $user_id);
         return $this->db->fetchResult();
     }
+
+    public function changeToPremium($user_id){
+        $this->db->callQuery("UPDATE users SET is_premium = TRUE WHERE user_id = :user_id");
+        $this->db->bind('user_id', $user_id);
+        $this->db->execute();
+    }
     
 }

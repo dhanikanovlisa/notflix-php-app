@@ -3,11 +3,13 @@
 require_once  DIRECTORY . '/../utils/database.php';
 require_once  DIRECTORY . '/../models/user.php';
 require_once DIRECTORY . '/../middlewares/AuthenticationMiddleware.php';
+require_once  DIRECTORY . '/../clients/SoapClient.php';
 
 class UserController
 {
     private $userModel;
     private $middleware;
+    private $soapClient;
     private int $limit;
     private int $page;
 
@@ -15,6 +17,7 @@ class UserController
     {
         $this->userModel = new UserModel();
         $this->middleware = new AuthenticationMiddleware();
+        $this->soapClient = new SoapCaller();
         $this->page = isset($_GET['page']) && $_GET['page'] > 0 ? $_GET['page'] : 1;
         $this->limit = isset($_GET['limit']) && $_GET['limit'] > 0 ? $_GET['limit'] : 12;
     }
@@ -138,6 +141,37 @@ class UserController
             }
         }
     }
+
+    public function requestPremium()
+    {
+        $params = array(
+            "user_id" => $_SESSION['user_id'],
+        );
+        $callUpgrade = $this->soapClient->call("/subscription?wsdl", "request", array($params));
+        header('Content-Type: application/json');
+        if ($callUpgrade) {
+            http_response_code(200);
+            echo json_encode(["data" => "succes"]);
+        }
+    }
+
+    public function checkStatus(){
+        $params = array(
+            "user_id" => $_SESSION['user_id'],
+        );
+        $checkStatus = $this->soapClient->call("/subscription?wsdl", "checkSubscriptionStatus", array($params));
+        if (!empty($checkStatus) && isset($checkStatus->return->status)) {
+            $status = $checkStatus->return->status;
+
+            if ($status === "ACCEPTED") {
+                $this->userModel->changeToPremium($_SESSION['user_id']);
+            }
+            return $status;
+        } else {
+            return null;
+        }
+    }
+    
 
 
     /**ADMIN */
