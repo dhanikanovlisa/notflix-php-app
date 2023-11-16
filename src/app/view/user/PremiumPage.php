@@ -28,6 +28,8 @@
         </header>
         <div id='result-container' class="cards">
         </div>
+        <div id='pagination-container' class='pagination'>
+        </div>
     </section>
 </body>
 
