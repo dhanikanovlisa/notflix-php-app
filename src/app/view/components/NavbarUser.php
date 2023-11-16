@@ -45,6 +45,7 @@
             <a href="/home">Home</a>
             <a href="/search">Search</a>
             <a href="/watchlist">Watchlist</a>
+            <a href="/premium-film">Premium</a>
             <a class="hidden-link" href="/settings/<?php echo $_SESSION["user_id"] ?>">Settings</a>
             <a class="hidden-link" onCLick="logout()">Logout</a>
             <img id="photo-profile" class="photo-profile" src="<?php
