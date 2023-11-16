@@ -250,6 +250,17 @@ class FilmController
             header("Location: /login");
         }
     }
+
+    public function showWatchPremiumPage($params = [])
+    {
+        if ($this->middleware->isAdmin()) {
+            header("Location: /restrictAdmin");
+        } else if ($this->middleware->isAuthenticated()) {
+            require_once DIRECTORY . "/../view/film/WatchPremiumPage.php";
+        } else {
+            header("Location: /login");
+        }
+    }
     public function showDetailFilmPage($params = [])
     {
         if ($this->middleware->isAdmin()) {
