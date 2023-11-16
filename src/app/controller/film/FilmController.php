@@ -347,7 +347,7 @@ class FilmController
             "film_id" => $_POST['film_id'],
             "user_id" => $_SESSION['user_id'],
         );
-        $this->soapClient->call("likes?wsdl", "deleteLikes", array($params));
+        $this->soapClient->call("/likes?wsdl", "deleteLikes", array($params));
         http_response_code(200);
 
         $likes_count = $this->filmModel->deleteLike($_POST['film_id']);
