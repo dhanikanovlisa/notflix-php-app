@@ -20,6 +20,9 @@
     <script type="text/javascript" src="/javascript/user/premiumFilm.js" defer></script>
 </head>
 <body>
+    <script type="text/javascript" defer>
+        const PHP_REST_URL = "<?php echo REST_URL;?>";
+    </script>
     <?php include (DIRECTORY. "/../view/components/NavbarUser.php"); ?>
     <?php include(DIRECTORY . "/../view/components/loading.php"); ?>
     <section>

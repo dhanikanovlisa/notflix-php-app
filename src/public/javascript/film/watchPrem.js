@@ -1,4 +1,3 @@
-const PHP_REST_URL = 'http://localhost:8000';
 const pathname = window.location.pathname.split('/');
 const filmID = pathname[pathname.length-1];
 

@@ -17,6 +17,9 @@
 </head>
 
 <body>
+    <script type="text/javascript" defer>
+        const PHP_REST_URL = "<?php echo REST_URL;?>";
+    </script>
     <?php include(DIRECTORY. "/../view/components/NavbarUser.php"); ?>
     <section>
         <header>

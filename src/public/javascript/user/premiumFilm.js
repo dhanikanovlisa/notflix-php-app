@@ -1,12 +1,9 @@
 const card_container = document.getElementById("result-container");
 
-const PHP_REST_URL = `http://localhost:8000`;
-
 const LIMIT = 6;
 let pagination_count = 0;
 
 function addButtonPagination(val, symbol, is_active){
-    // console.log(val, symbol, is_active);
     pagination_container.innerHTML += `
         <div class="button-pagination ${is_active? "button-red":"button-white"}" value=${val} symbol="${symbol}" onClick=handlePagination(this.getAttribute('value'))>
             ${symbol}
@@ -152,11 +149,13 @@ async function handlePagination(val){
 
 }
 
+console.log(PHP_REST_URL);
 const xhr = new XMLHttpRequest();
 xhr.open('GET', `${PHP_REST_URL}/films/premium-film/0`);
 xhr.send();
 xhr.onreadystatechange = async () => {
     if (xhr.readyState === XMLHttpRequest.DONE){
+        console.log(xhr.responseText);
         var response = JSON.parse(xhr.responseText);
         if (xhr.status === 200){
             console.log(response);

@@ -9,6 +9,7 @@ define('PORT', $_ENV['POSTGRES_PORT']);
 
 define('SOAP_API', $_ENV['PHP_SOAP_URL']);
 define('SOAP_KEY', $_ENV['SOAP_KEY']);
+define('REST_URL', $_ENV['PHP_REST_URL']);
 define('MAX_SIZE_PROFILE', 800 * 1024);
 define('MAX_SIZE_POSTER', 1 * 1024 * 1024 );
 define('MAX_SIZE_VIDEO', 5 * 1024 * 1024 );
