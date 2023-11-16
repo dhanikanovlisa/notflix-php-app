@@ -45,7 +45,15 @@
             <a href="/home">Home</a>
             <a href="/search">Search</a>
             <a href="/watchlist">Watchlist</a>
-            <a href="/premium-film">Premium</a>
+            <?php require_once DIRECTORY . '/../controller/user/UserController.php';
+                                                                $user = new UserController();
+                                                                if (isset($_SESSION["user_id"])) {
+                                                                    $user = $user->getUserByID($_SESSION["user_id"]);
+                                                                    if ($user["is_premium"]) {
+                                                                        echo '<a href="/premium-film">Premium</a>';
+                                                                    } 
+                                                                } ?>
+                
             <a class="hidden-link" href="/settings/<?php echo $_SESSION["user_id"] ?>">Settings</a>
             <a class="hidden-link" onCLick="logout()">Logout</a>
             <img id="photo-profile" class="photo-profile" src="<?php

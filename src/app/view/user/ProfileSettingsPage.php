@@ -50,7 +50,7 @@
                             
                         <?php 
                                 $status = $userDetail->checkStatus();
-                                if (!empty($status)) {
+                                if (!($status == null)) {
                                     if($status === "PENDING"){
                                         echo '<div class="pending">' . $status . '</div>';
                                     } else if ($status === "ACCEPTED"){

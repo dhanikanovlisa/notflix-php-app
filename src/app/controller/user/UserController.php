@@ -160,14 +160,18 @@ class UserController
             "user_id" => $_SESSION['user_id'],
         );
         $checkStatus = $this->soapClient->call("/subscription?wsdl", "checkSubscriptionStatus", array($params));
-        if ($checkStatus) {
+        if (!empty($checkStatus) && isset($checkStatus->return->status)) {
             $status = $checkStatus->return->status;
-            if($status === "ACCEPTED"){
+
+            if ($status === "ACCEPTED") {
                 $this->userModel->changeToPremium($_SESSION['user_id']);
             }
             return $status;
+        } else {
+            return null;
         }
     }
+    
 
 
     /**ADMIN */
