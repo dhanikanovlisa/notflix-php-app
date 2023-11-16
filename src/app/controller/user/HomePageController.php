@@ -3,7 +3,6 @@ require_once  DIRECTORY . '/../utils/database.php';
 require_once  DIRECTORY . '/../models/films.php';
 require_once  DIRECTORY . '/../models/watchlist.php';
 require_once  DIRECTORY . '/../middlewares/AuthenticationMiddleware.php';
-require_once  DIRECTORY . '/../clients/RestClient.php';
 require_once DIRECTORY . '/../clients/SoapClient.php';
 
 class HomePageController{ 
@@ -11,9 +10,6 @@ class HomePageController{
 
     private $watchListModel;
     private $middleware;
-
-    private $restClient;
-    private $soapClient;
 
     private int $limit;
     private int $page;
@@ -23,8 +19,6 @@ class HomePageController{
         $this->filmModel = new FilmsModel();    
         $this->watchListModel = new WatchListModel();
         $this->middleware = new AuthenticationMiddleware();
-        $this->restClient = new RestClient();
-        $this->soapClient = new SoapCaller(); 
         $this->page = isset($_GET['page']) && $_GET['page']>0 ? $_GET['page'] : 1;
         $this->limit = isset($_GET['limit']) && $_GET['limit']>0 ? $_GET['limit'] : 12;
     }
@@ -73,11 +67,4 @@ class HomePageController{
         if (!$film) return false;
         else true;
     }
-
-    public function getAllPremiumFilm(){
-        // $premiumFilms = $this->restClient->get("/films/premium-film");
-        // $premiumFilms = json_decode($premiumFilms, true);
-        $premiumFilms = $this->soapClient->call("getPremiumFilm", []);
-        return $premiumFilms; 
-     }
 }

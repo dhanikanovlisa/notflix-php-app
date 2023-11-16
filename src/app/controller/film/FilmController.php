@@ -6,7 +6,6 @@ require_once  DIRECTORY . '/../utils/duration.php';
 require_once  DIRECTORY . '/../models/filmGenre.php';
 require_once  DIRECTORY . '/../models/watchlist.php';
 require_once  DIRECTORY . '/../middlewares/AuthenticationMiddleware.php';
-require_once  DIRECTORY . '/../clients/RestClient.php';
 require_once  DIRECTORY . '/../clients/SoapClient.php';
 
 class FilmController
@@ -15,7 +14,6 @@ class FilmController
     private $filmGenreModel;
     private $watchlistModel;
     private $middleware;
-    private $restClient;
     private $soapClient;
 
     private int $limit;
@@ -28,7 +26,6 @@ class FilmController
         $this->watchlistModel = new WatchListModel();
         $this->middleware = new AuthenticationMiddleware();
         $this->soapClient = new SoapCaller();
-        $this->restClient = new RestClient();
         $this->page = isset($_GET['page']) && $_GET['page'] > 0 ? $_GET['page'] : 1;
         $this->limit = isset($_GET['limit']) && $_GET['limit'] > 0 ? $_GET['limit'] : 12;
     }
@@ -295,12 +292,6 @@ class FilmController
         }
     }
 
-    public function getAllPremiumFilm()
-    {
-        $premiumFilms = $this->restClient->get("/premium-film");
-        $premiumFilms = json_decode($premiumFilms, true);
-        return $premiumFilms;
-    }
 
     public function getLikesCount($filmID)
     {
@@ -313,7 +304,7 @@ class FilmController
             "film_id" => $film_id,
             "user_id" => $_SESSION['user_id'],
         );
-        $isUserLikeFilm = $this->soapClient->call("isUserLikeFilm", array($params))->return;
+        $isUserLikeFilm = $this->soapClient->call("/likes?wsdl", "isUserLikeFilm", array($params))->return;
         $likescount = $this->getLikesCount($film_id);
 
         echo
@@ -328,12 +319,12 @@ class FilmController
             "user_id" => $_SESSION['user_id'],
         );
         header('Content-Type: application/json');
-        if ($this->soapClient->call("isUserLikeFilm", array($params))->return) {
+        if ($this->soapClient->call("/likes?wsdl", "isUserLikeFilm", array($params))->return) {
             http_response_code(200);
             echo json_encode(["likes_count" => $this->getLikesCount($_POST['film_id'])]);
             return;
         }
-        $this->soapClient->call("addLikes", array($params));
+        $this->soapClient->call("/likes?wsdl", "addLikes", array($params));
         http_response_code(200);
 
         $likes_count = $this->filmModel->addLike($_POST['film_id']);
@@ -347,7 +338,7 @@ class FilmController
             "user_id" => $_SESSION['user_id'],
         );
         header('Content-Type: application/json');
-        if (!$this->soapClient->call("isUserLikeFilm", array($params))->return) {
+        if (!$this->soapClient->call("/likes?wsdl", "isUserLikeFilm", array($params))->return) {
             http_response_code(200);
             echo json_encode(["likes_count" => $this->getLikesCount($_POST['film_id'])]);
             return;
@@ -356,7 +347,7 @@ class FilmController
             "film_id" => $_POST['film_id'],
             "user_id" => $_SESSION['user_id'],
         );
-        $this->soapClient->call("deleteLikes", array($params));
+        $this->soapClient->call("likes?wsdl", "deleteLikes", array($params));
         http_response_code(200);
 
         $likes_count = $this->filmModel->deleteLike($_POST['film_id']);
