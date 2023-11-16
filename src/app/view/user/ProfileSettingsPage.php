@@ -13,6 +13,8 @@
     <link rel="stylesheet" type="text/css" href="/styles/components/Navbar.css">
     <!---Page specify CSS--->
     <link rel="stylesheet" type="text/css" href="/styles/user/profilesetting.css">
+    <!---JS--->
+    <script src="/javascript/user/profileSettings.js" defer></script>
 </head>
 
 <body>
@@ -25,7 +27,6 @@
     $userDetail = new UserController();
     $userData = $userDetail->getUserByID($id);
     $totalRow = count($userData);
-
     if ($totalRow == 0) {
         require_once  DIRECTORY . '/../view/conditional/NotFound.php';
         exit;
@@ -46,11 +47,26 @@
                                     }
                                     ?>" alt="Profile Picture" />
                         <div class="upgrade">
-                            <?php 
-                            if(!$userData["is_premium"]){
-                                echo '<button class="button-white button-text">Upgrade</button>';
-                            }
-                            ?>
+                            
+                        <?php 
+                                $status = $userDetail->checkStatus();
+                                if (!empty($status)) {
+                                    if($status === "PENDING"){
+                                        echo '<div class="pending">' . $status . '</div>';
+                                    } else if ($status === "ACCEPTED"){
+                                        echo '<h3>Premium</h3>';
+                                    } else if($status === "REJECTED"){
+                                        echo '<button id="upgradeButton" class="button-white button-text" onclick="upgradeButtonClick()">Upgrade</button>';
+                                    }
+                                } else {
+                                    if (!$userData["is_premium"]) {
+                                        echo '<button id="upgradeButton" class="button-white button-text" onclick="upgradeButtonClick()">Upgrade</button>';
+                                    } else {
+                                        echo '<h3>Premium User</h3>';
+                                    }
+                                }
+                                ?>
+
                         </div>
                     </div>
 

@@ -42,6 +42,19 @@
 .upgrade{
     padding-top: 1rem;
 }
+.pending{
+    width:auto;
+    padding: 0.25rem;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    border-radius: 1rem;
+    border-color: orange;
+    background-color: yellow;
+    border-radius: 4rem;
+    border: 0.25rem solid orange;
+    font-weight: bold;
+}
 
 .profile img {
     border-radius: 10rem; 

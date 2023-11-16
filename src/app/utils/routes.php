@@ -55,4 +55,6 @@ $route = [
     '/delete/like' => ["POST" => "film/FilmController@deleteLike"],
 
     '/premium-film' => ["GET" => "user/PremiumPageController@showPremiumPage"],
+
+    '/upgrade-premium' => ["GET" => "user/UserController@requestPremium"],
 ];
