@@ -19,6 +19,10 @@ Aplikasi ini dibangun menggunakan vanilla PHP, Javascript, HTML dan CSS dengan m
 14. Add Genre
 15. Delete Genre
 16. Edit profile
+### New Feature
+17. Premium Film
+18. Watch Premium Film
+19. Request Premium Subscription
 
 # Cara instalasi
 1. Clone repository ini dengan perintah `git clone https://gitlab.informatika.org/if3110-2023-01-34/tugas-besar-1.git`
@@ -66,6 +70,8 @@ atau dari github `git clone https://github.com/dhanikanovlisa/Tubes-1-WBD.git`
 ![image](screenshots/admin_mode.jpg)
 ![image](screenshots/responsive_homepage.jpg)
 ![image](screenshots/responsive_login.jpg)
+![image](screenshots/profile_pending.jpg)
+![image](screenshots/profile_premium.jpg)
 
 
 # Pembagian Tugas
@@ -88,7 +94,9 @@ atau dari github `git clone https://github.com/dhanikanovlisa/Tubes-1-WBD.git`
 | **Add Genre**       | 13521132     |
 | **Delete Genre**    | 13521132     |
 | **Edit Profile**    | 13521132     |
-
+| **Premium Film**    | 13521130     |
+| **Watch Premium Film**    | 13521130     |
+| **Request Premium Subscription**    | 13521165     |
 
 
 ## Client Side
@@ -110,3 +118,6 @@ atau dari github `git clone https://github.com/dhanikanovlisa/Tubes-1-WBD.git`
 | **Add Genre**       | 13521132     |
 | **Delete Genre**    | 13521132     |
 | **Edit Profile**    | 13521132     |
+| **Premium Film**    | 13521130     |
+| **Watch Premium Film**    | 13521130     |
+| **Request Premium Subscription**    | 13521165     |
