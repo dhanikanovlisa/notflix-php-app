@@ -56,7 +56,7 @@
                                     } else if ($status === "ACCEPTED"){
                                         echo '<h3>Premium</h3>';
                                     } else if($status === "REJECTED"){
-                                        echo '<button id="upgradeButton" class="button-white button-text" onclick="upgradeButtonClick()">Upgrade</button>';
+                                        echo '<div class="rejected">' . $status . '</div>';
                                     }
                                 } else {
                                     if (!$userData["is_premium"]) {
