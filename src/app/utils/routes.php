@@ -56,4 +56,5 @@ $route = [
 
     '/premium-film' => ["GET" => "user/PremiumPageController@showPremiumPage"],
     '/upgrade-premium' => ["GET" => "user/UserController@requestPremium"],
+    '/watch-prem/:id' => ["GET" => "film/FilmController@showWatchPremiumPage"]
 ];
