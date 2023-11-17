@@ -72,7 +72,8 @@ atau dari github `git clone https://github.com/dhanikanovlisa/Tubes-1-WBD.git`
 ![image](screenshots/responsive_login.jpg)
 ![image](screenshots/profile_pending.jpg)
 ![image](screenshots/profile_premium.jpg)
-
+![image](screenshots/premium_film.jpg)
+![image](screenshots/watch_premium.jpg)
 
 # Pembagian Tugas
 ## Server Side
