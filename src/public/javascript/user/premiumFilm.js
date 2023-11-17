@@ -1,7 +1,14 @@
 const card_container = document.getElementById("result-container");
 
-const LIMIT = 6;
+const LIMIT = 20;
 let pagination_count = 0;
+
+if (!window.location.href.includes("pages=")) {
+    window.location.href+= "?pages=1";
+}
+
+const href = (window.location.href.split('pages='));
+const pages = href[href.length-1];
 
 function addButtonPagination(val, symbol, is_active){
     pagination_container.innerHTML += `
@@ -26,6 +33,8 @@ function generatePagination2(active, start, leftButton, rightButton){
 }
 
 const pagination_container = document.getElementById('pagination-container');
+
+
 function generatePagination(){
     const xhr = new XMLHttpRequest();
     xhr.open('GET', `${PHP_REST_URL}/films/count`);
@@ -38,25 +47,21 @@ function generatePagination(){
                 console.log(film_count);
                 pagination_count = Math.ceil(film_count / LIMIT);
                 if (pagination_count <= 5){
-                    for (let i = 0; i < pagination_count; i++) {
-                        let is_active = false;
-                        if (i == 0) is_active = true;
-                        addButtonPagination(i+1, i + 1, is_active);
-                    }
+                    generatePagination2(pages, 1, false, false, pagination_count);
                 } else {
-                for (let i = 0; i < 5; i++) {
-                    let is_active = false;
-                    if (i == 0) is_active = true;
-                    addButtonPagination(i+1, i + 1, is_active);
+                    if (pages < 5){
+                        generatePagination2(pages, 1, false, true);
+                    } else if (pages >= pagination_count-4){
+                        generatePagination2(pages, pagination_count-4, true, false);
+                    } else {
+                        generatePagination2(pages, pages, true, true);
+                    }
                 }
-                if (pagination_count > 5){
-                    addButtonPagination(6, '>>', false);
-                }
-            }
             }
         }
     }
 }
+
 
 async function handlePagination(val){
     let num = Number(val);
@@ -151,7 +156,7 @@ async function handlePagination(val){
 
 console.log(PHP_REST_URL);
 const xhr = new XMLHttpRequest();
-xhr.open('GET', `${PHP_REST_URL}/films/premium-film/0`);
+xhr.open('GET', `${PHP_REST_URL}/films/premium-film/${pages-1}`);
 xhr.send();
 xhr.onreadystatechange = async () => {
     if (xhr.readyState === XMLHttpRequest.DONE){
