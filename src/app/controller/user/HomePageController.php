@@ -3,12 +3,14 @@ require_once  DIRECTORY . '/../utils/database.php';
 require_once  DIRECTORY . '/../models/films.php';
 require_once  DIRECTORY . '/../models/watchlist.php';
 require_once  DIRECTORY . '/../middlewares/AuthenticationMiddleware.php';
+require_once DIRECTORY . '/../clients/SoapClient.php';
+
 class HomePageController{ 
     private $filmModel;
 
     private $watchListModel;
     private $middleware;
-    
+
     private int $limit;
     private int $page;
 
@@ -25,7 +27,7 @@ class HomePageController{
         if ($this->middleware->isAdmin()) {
             header("Location: /restrictAdmin");
         } else if ($this->middleware->isAuthenticated()) {
-            require_once DIRECTORY . "/../component/user/HomePage.php";
+            require_once DIRECTORY . "/../view/user/HomePage.php";
         } else {
             header("Location: /login");
         }
@@ -37,14 +39,14 @@ class HomePageController{
         $items_per_page = 12;
         $current_page = $this->page;
 
-        include(DIRECTORY . "/../component/template/pagination.php");
+        include(DIRECTORY . "/../view/components/pagination.php");
     }
 
     public function generateCards(){
         $offset = ($this->page-1)*$this->limit;
         $films = $this->filmModel->getFilm($this->limit, $offset);
         foreach($films as $film){
-            include(DIRECTORY . "/../component/template/cardMovie.php");
+            include(DIRECTORY . "/../view/components/cardMovie.php");
         }
         if (empty($films) && $this->page == 1) echo "No film currently available";
     }

@@ -185,7 +185,7 @@ registrationForm && registrationForm.addEventListener('submit', async (e) => {
     if (isUsernameValid && isEmailValid && isPhoneValid && isFirstNameValid && isLastNameValid && isPasswordValid && isConfirmPasswordValid) {
         e.preventDefault();
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/register/register');
+        xhr.open('POST', '/auth/register');
 
         const formData = new FormData();
         formData.append('username', usernameInput.value);

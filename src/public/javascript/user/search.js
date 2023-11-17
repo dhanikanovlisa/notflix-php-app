@@ -15,7 +15,7 @@ const fetchResults = ()=>{
     params.set('orderby', orderby.value);
     params.set('genre', genre.value);
 
-    const location = '/search/search?'+params.toString();
+    const location = '/search/film?'+params.toString();
     xhr.open('GET', location, true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send();

@@ -20,6 +20,18 @@ class UserModel{
         return $this->db->fetchResult();
     }
 
+    /**Get user count */
+    public function getUserCount(){
+        $this->db->callQuery('SELECT COUNT(*) FROM ' . $this->table);
+        return $this->db->fetchResult();   
+    }
+
+    /**Get user for pagination */
+    public function getUser($limit, $offset){
+        $this->db->callQuery("SELECT * FROM users LIMIT $limit OFFSET $offset");
+        return $this->db->fetchAllResult();
+    }
+
     /**Get user by username*/
     public function getUserByUsername($username){
         $this->db->callQuery("SELECT * FROM users WHERE username = '$username'");
@@ -89,6 +101,12 @@ class UserModel{
         $this->db->callQuery("SELECT is_admin FROM users where user_id = :user_id;");
         $this->db->bind('user_id', $user_id);
         return $this->db->fetchResult();
+    }
+
+    public function changeToPremium($user_id){
+        $this->db->callQuery("UPDATE users SET is_premium = TRUE WHERE user_id = :user_id");
+        $this->db->bind('user_id', $user_id);
+        $this->db->execute();
     }
     
 }

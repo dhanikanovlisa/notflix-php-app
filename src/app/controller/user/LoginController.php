@@ -17,7 +17,7 @@ class LoginController{
         } else if ($this->middleware->isAuthenticated()) {
             header("Location: /home");
         } else {
-            require_once DIRECTORY . "/../component/user/LoginPage.php";
+            require_once DIRECTORY . "/../view/user/LoginPage.php";
         }
     }
     public function login(){

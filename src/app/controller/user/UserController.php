@@ -3,19 +3,27 @@
 require_once  DIRECTORY . '/../utils/database.php';
 require_once  DIRECTORY . '/../models/user.php';
 require_once DIRECTORY . '/../middlewares/AuthenticationMiddleware.php';
+require_once  DIRECTORY . '/../clients/SoapClient.php';
 
 class UserController
 {
     private $userModel;
     private $middleware;
+    private $soapClient;
+    private int $limit;
+    private int $page;
 
     public function __construct()
     {
         $this->userModel = new UserModel();
         $this->middleware = new AuthenticationMiddleware();
+        $this->soapClient = new SoapCaller();
+        $this->page = isset($_GET['page']) && $_GET['page'] > 0 ? $_GET['page'] : 1;
+        $this->limit = isset($_GET['limit']) && $_GET['limit'] > 0 ? $_GET['limit'] : 12;
     }
 
-    public function getUserByID($param){
+    public function getUserByID($param)
+    {
         return $this->userModel->getUserByID($param);
     }
 
@@ -35,6 +43,27 @@ class UserController
         }
         return $result;
     }
+
+    public function generatePagination()
+    {
+        $total_records = $this->userModel->getUserCount();
+        if ($total_records) $total_records = $total_records['count'];
+        $items_per_page = 12;
+        $current_page = $this->page;
+
+        include(DIRECTORY . "/../view/components/pagination.php");
+    }
+
+    public function generateCards()
+    {
+        $offset = ($this->page - 1) * $this->limit;
+        $users = $this->userModel->getUser($this->limit, $offset);
+        foreach ($users as $user) {
+            include(DIRECTORY . "/../view/components/cardUser.php");
+        }
+        if (empty($users) && $this->page == 1) echo "No user currently available";
+    }
+
     public function checkUsername($username)
     {
         $username = ltrim($username['username'], ':');
@@ -67,19 +96,25 @@ class UserController
     /**USER */
     public function showProfileSettingsPage($params = [])
     {
-        require_once DIRECTORY . "/../component/user/ProfileSettingsPage.php";
+        require_once DIRECTORY . "/../view/user/ProfileSettingsPage.php";
     }
 
-        public function showEditProfilePage($params = [])
+    public function showEditProfilePage($params = [])
     {
-        require_once DIRECTORY . "/../component/user/EditProfilePage.php";
+        require_once DIRECTORY . "/../view/user/EditProfilePage.php";
     }
 
     public function editProfile()
     {
         header('Content-Type: application/json');
+        if (!empty($_POST['photo_size'])) {
+            if ($_POST['photo_size'] > MAX_SIZE_PROFILE) {
+                http_response_code(413);
+                echo json_encode(["error" => "File size must be less than 800KB"]);
+                exit;
+            }
+        }
         http_response_code(200);
-    
         $existingUserData = $this->userModel->getUserById($_POST['user_id']);
         $updateData = [];
 
@@ -93,10 +128,10 @@ class UserController
         //  print_r($updateData);
         echo json_encode(["redirect_url" => "/settings/" . $_POST['user_id']]);
     }
-    
+
     private function checkAndUpdateField($newData, $existingData)
     {
-        if(empty($newData)){
+        if (empty($newData)) {
             return $existingData;
         } else {
             if (strcmp($newData, $existingData) !== 0) {
@@ -106,14 +141,45 @@ class UserController
             }
         }
     }
+
+    public function requestPremium()
+    {
+        $params = array(
+            "user_id" => $_SESSION['user_id'],
+        );
+        $callUpgrade = $this->soapClient->call("/subscription?wsdl", "request", array($params));
+        header('Content-Type: application/json');
+        if ($callUpgrade) {
+            http_response_code(200);
+            echo json_encode(["data" => "succes"]);
+        }
+    }
+
+    public function checkStatus(){
+        $params = array(
+            "user_id" => $_SESSION['user_id'],
+        );
+        $checkStatus = $this->soapClient->call("/subscription?wsdl", "checkSubscriptionStatus", array($params));
+        if (!empty($checkStatus) && isset($checkStatus->return->status)) {
+            $status = $checkStatus->return->status;
+
+            if ($status === "ACCEPTED") {
+                $this->userModel->changeToPremium($_SESSION['user_id']);
+            }
+            return $status;
+        } else {
+            return null;
+        }
+    }
     
+
 
     /**ADMIN */
     /**Manage ALL User */
     public function showManageUserPage()
     {
         if ($this->middleware->isAdmin()) {
-            require_once DIRECTORY . "/../component/user/ManageUserPage.php";
+            require_once DIRECTORY . "/../view/user/ManageUserPage.php";
         } else if ($this->middleware->isAuthenticated()) {
             header("Location: /restrict");
         } else {
@@ -122,32 +188,37 @@ class UserController
     }
 
     /**Delete User */
-    public function deleteUser(){
+    public function deleteUser()
+    {
         header('Content-Type: application/json');
         http_response_code(200);
-        
+
         $this->userModel->deleteUser($_POST['user_id']);
+        unset($_SESSION['user_id']);
         echo json_encode(["redirect_url" => "/manage-user"]);
     }
 
-    public function changeToAdmin(){
+    public function changeToAdmin()
+    {
         header('Content-Type: application/json');
         http_response_code(200);
-        
+
         $this->userModel->changeToAdmin($_POST['user_id']);
         echo json_encode(["redirect_url" => "/user-detail/" . $_POST['user_id']]);
     }
-    public function changeToUser(){
+    public function changeToUser()
+    {
         header('Content-Type: application/json');
         http_response_code(200);
-        
+
         $this->userModel->changeToUser($_POST['user_id']);
         echo json_encode(["redirect_url" => "/user-detail/" . $_POST['user_id']]);
     }
 
-    public function showUserDetailPage($params = []){
+    public function showUserDetailPage($params = [])
+    {
         if ($this->middleware->isAdmin()) {
-            require_once DIRECTORY . "/../component/user/UserDetailPage.php";
+            require_once DIRECTORY . "/../view/user/UserDetailPage.php";
         } else if ($this->middleware->isAuthenticated()) {
             header("Location: /restrict");
         } else {

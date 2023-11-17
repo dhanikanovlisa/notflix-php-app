@@ -9,12 +9,16 @@ class GenreController
     private $genreModel;
     private $filmGenreModel;
     private $middleware;
+    private int $limit;
+    private int $page;
 
     public function __construct()
     {
         $this->genreModel = new GenreModel();
         $this->filmGenreModel = new FilmGenreModel();
         $this->middleware = new AuthenticationMiddleware();
+        $this->page = isset($_GET['page']) && $_GET['page']>0 ? $_GET['page'] : 1;
+        $this->limit = isset($_GET['limit']) && $_GET['limit']>0 ? $_GET['limit'] : 12;
     }
 
     public function getAllGenre()
@@ -58,10 +62,29 @@ class GenreController
         echo json_encode(["redirect_url" => "/manage-genre"]);
     }
 
+    /**Generate pagination */
+    public function generatePagination(){
+        $total_records = $this->genreModel->getGenreCount();
+        if($total_records) $total_records=$total_records['count'];
+        $items_per_page = 12;
+        $current_page = $this->page;
+
+        include(DIRECTORY . "/../view/components/pagination.php");
+    }
+
+    public function generateCards(){
+        $offset = ($this->page-1)*$this->limit;
+        $genres = $this->genreModel->getGenre($this->limit, $offset);
+        foreach($genres as $genre){
+            include(DIRECTORY . "/../view/components/cardGenre.php");
+        }
+        if (empty($genres) && $this->page == 1) echo "No user currently available";
+    }
+
     public function showManageGenrePage()
     {
         if ($this->middleware->isAdmin()) {
-            include_once DIRECTORY . '/../component/film/ManageGenrePage.php';
+            include_once DIRECTORY . '/../view/film/ManageGenrePage.php';
         } else if ($this->middleware->isAuthenticated()) {
             header("Location: /restrict");
         } else {
@@ -72,7 +95,7 @@ class GenreController
     public function addGenrePage()
     {
         if ($this->middleware->isAdmin()) {
-            include_once DIRECTORY . '/../component/film/AddGenrePage.php';
+            include_once DIRECTORY . '/../view/film/AddGenrePage.php';
         } else if ($this->middleware->isAuthenticated()) {
             header("Location: /restrict");
         } else {

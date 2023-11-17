@@ -17,7 +17,7 @@ class RegistrationController{
         } else if ($this->middleware->isAuthenticated()) {
             header("Location: /home");
         } else {
-            require_once DIRECTORY . "/../component/user/RegistrationPage.php";
+            require_once DIRECTORY . "/../view/user/RegistrationPage.php";
         }
     }
 

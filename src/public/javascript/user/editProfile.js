@@ -165,6 +165,18 @@ function succes(){
     setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 1700);
 }
 
+
+profilePicture.addEventListener('change', () => {
+    let message = document.getElementById("error-upload");
+    if (profilePicture.files[0]) {
+        if (profilePicture.files[0].size > 8 * 1024) {
+            message.innerHTML = "File size must be less than 800KB";
+        } else {
+            message.innerHTML = ""; 
+        }
+    }
+});
+
 editProfile && editProfile.addEventListener('submit', async (e) => {
     e.preventDefault();
     let xhr = new XMLHttpRequest();
@@ -176,20 +188,30 @@ editProfile && editProfile.addEventListener('submit', async (e) => {
     formData.append('email', emailInput.value);
 
     formData.append('phone_number', phoneInput.value);
-    if(profilePicture.files[0] != undefined){
+    if(profilePicture.files[0] !== undefined){
         formData.append('photo_profile', profilePicture.files[0].name);
+        formData.append('photo_size', profilePicture.files[0].size);
     } else {
         formData.append('photo_profile', "");
     }
+
     xhr.open('POST', '/update-profile');
     xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            const response = JSON.parse(xhr.responseText);
-            setTimeout(() => {
-                location.replace(response.redirect_url);
-            }, 1500);
-            
+        if (xhr.readyState === 4 ) {
+            if(xhr.status === 200){
+                const response = JSON.parse(xhr.responseText);
+                let message = document.getElementById("error-upload");
+                message.innerHTML = "";
+                succes(); 
+                setTimeout(() => {
+                    location.replace(response.redirect_url);
+                }, 1500);
+            } else if(xhr.status === 413){
+                let message = document.getElementById("error-upload");
+                message.innerHTML = "File size must be less than 800KB";
+            }
         }
-    }
-    xhr.send(formData);
+    };
+
+    xhr.send(formData); 
 });

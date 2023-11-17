@@ -2,6 +2,7 @@ const usernameInput = document.querySelector('#username');
 const passwordInput = document.querySelector('#password');
 const loginForm = document.querySelector('#login-form');
 const loginAlert = document.getElementById('login-alert');
+const loader = document.querySelector('.loader-container');
 
 function setErrorWarning(desc, message){
     desc.innerText = message;
@@ -11,11 +12,19 @@ function removeErrorWarning(desc){
     desc.innerText = '';
 }
 
+function showLoading(){
+    loader.style.display = 'flex';
+}
+
+function hideLoading(){
+    loader.style.display = 'none';
+}
+
 const usernameRegex = /^[a-z0-9_\.]+$/;
 
 loginForm && loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-
+    showLoading();
     const xhr_uname = new XMLHttpRequest();
     xhr_uname.open('GET', '/check/username/:' + usernameInput.value);
     
@@ -28,7 +37,7 @@ loginForm && loginForm.addEventListener('submit', async (e) => {
                 return;
             } else {
                 const xhr_pass = new XMLHttpRequest();
-                xhr_pass.open('POST', '/login/login');
+                xhr_pass.open('POST', '/auth/login');
             
                 const formData = new FormData();
                 formData.append('username', usernameInput.value);
@@ -38,6 +47,7 @@ loginForm && loginForm.addEventListener('submit', async (e) => {
                 xhr_pass.onreadystatechange = () => {
                     if (xhr_pass.readyState === XMLHttpRequest.DONE) {
                         if (xhr_pass.status === 401){
+                            hideLoading();
                             setErrorWarning(loginAlert, 'Username or password is incorrect');
                             return;
                         }
@@ -46,6 +56,8 @@ loginForm && loginForm.addEventListener('submit', async (e) => {
                     }
                 }
             }
+        } else {
+            hideLoading();
         }
     }
 });

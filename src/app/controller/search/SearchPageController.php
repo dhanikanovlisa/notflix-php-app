@@ -40,7 +40,7 @@ class SearchPageController{
         
         ob_start();
         foreach($lf as $film){
-            include(DIRECTORY . "/../component/template/cardMovie.php");
+            include(DIRECTORY . "/../view/components/cardMovie.php");
             $this->items_count += 1;
         }
         $response = ob_get_contents();
@@ -54,7 +54,7 @@ class SearchPageController{
         $current_page = $this->page;
         
         ob_start();
-        include(DIRECTORY . "/../component/template/pagination.php");
+        include(DIRECTORY . "/../view/components/pagination.php");
         $response = ob_get_contents();
         ob_end_clean();
 
@@ -70,7 +70,7 @@ class SearchPageController{
         if ($this->middleware->isAdmin()) {
             header("Location: /restrictAdmin");
         } else if ($this->middleware->isAuthenticated()) {
-            require_once DIRECTORY . "/../component/user/SearchPage.php";
+            require_once DIRECTORY . "/../view/user/SearchPage.php";
         } else {
             header("Location: /login");
         }

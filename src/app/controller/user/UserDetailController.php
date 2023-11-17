@@ -16,6 +16,6 @@ class UserDetailController{
     }
 
     public function showUserDetailPage($params = []){
-        require_once DIRECTORY . "/../component/user/UserDetailPage.php";
+        require_once DIRECTORY . "/../view/user/UserDetailPage.php";
     }
 }

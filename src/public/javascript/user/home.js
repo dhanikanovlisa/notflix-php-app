@@ -5,7 +5,7 @@ const watchlist = document.querySelector("#watchlist");
 
 function watchListButton(){
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', '/check-watchlist/' + film_id);
+    xhr.open('GET', '/check/watchlist/' + film_id);
 
     xhr.send();
     xhr.onreadystatechange = async () => {
@@ -13,7 +13,7 @@ function watchListButton(){
             var response = JSON.parse(xhr.responseText);
             if (!response.isExist){
                 const xhr = new XMLHttpRequest();
-                xhr.open('POST', '/add-watchlist');
+                xhr.open('POST', '/add/watchlist');
                 const form_data = new FormData();
                 form_data.append('film_id', film_id);
                 xhr.send(form_data);
@@ -29,7 +29,7 @@ function watchListButton(){
                 }
             } else {
                 const xhr = new XMLHttpRequest();
-                xhr.open('POST', '/delete-watchlist');
+                xhr.open('POST', '/delete/watchlist');
                 const form_data = new FormData();
                 form_data.append('film_id', film_id);
                 xhr.send(form_data);
@@ -52,7 +52,7 @@ function watchListButton(){
 
 document.addEventListener('DOMContentLoaded', async function () {
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', '/check-watchlist/' + film_id);
+    xhr.open('GET', '/check/watchlist/' + film_id);
 
     xhr.send();
     xhr.onreadystatechange = async () => {
